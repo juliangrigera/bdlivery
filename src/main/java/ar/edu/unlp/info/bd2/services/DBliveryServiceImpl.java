@@ -26,7 +26,9 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
 		// TODO Auto-generated method stub
-		return null;
+		Supplier s = new Supplier(name, cuil, address, coordX, coordY);
+		return repository.storeSupplier(s);
+		
 	}
 
 	

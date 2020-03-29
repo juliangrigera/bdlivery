@@ -28,7 +28,7 @@ public class Product {
 	 @OneToMany(cascade = CascadeType.ALL,
      fetch = FetchType.LAZY,
      mappedBy = "product")
-	 private List<historyPrice> historyPrice = new ArrayList<historyPrice>();
+	 private List<HistoryPrice> historyPrice = new ArrayList<HistoryPrice>();
 
 	public Object getId() {
 		// TODO Auto-generated method stub

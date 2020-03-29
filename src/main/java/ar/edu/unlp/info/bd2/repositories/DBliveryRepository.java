@@ -22,5 +22,8 @@ public class DBliveryRepository {
 	    return user;
 	}
 	
-	
+	public Supplier storeSupplier(Supplier supplier) {
+		sessionFactory.getCurrentSession().save(supplier);
+		return supplier;
+		}
 }
