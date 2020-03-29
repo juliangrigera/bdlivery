@@ -15,5 +15,21 @@ import java.util.stream.Collectors;
 public class DBliveryRepository {
 	
 	SessionFactory sessionFactory;
-
+	
+	public User storeUser(User user){
+	    sessionFactory.getCurrentSession().save(user);
+	    return user;
+	}
+	
+	/*
+	public static void main (String [] args) {
+		
+		User u1 = new User("greco", "lucas");
+		
+		String userName = u1.getUsername();
+		
+		System.out.println(userName);
+	}
+	
+	*/
 }
