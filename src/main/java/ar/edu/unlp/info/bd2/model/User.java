@@ -1,7 +1,9 @@
 package ar.edu.unlp.info.bd2.model;
 
 import javax.persistence.*; //Utilizo la persistencia de JPA no hibernate...
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,29 +12,62 @@ import java.util.Objects;
 @Table(name="users")
 public class User {
 	
-	@Column(name="username",unique=true, nullable=false)
-    private String username;
-
-    @Column(nullable=false)
-    private String name;
-
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="userId")
     private Long id;
-    
-    @Column(name="email", nullable=false, unique=true)
+	
+	@Column(name="email",unique=true, nullable=false)
     private String email;
+	
+	@Column(name="password", nullable=false)
+    private String password;
+	
+	@Column(name="username",unique=true, nullable=false)
+    private String username;
+
+    @Column(name="name", nullable=false)
+    private String name;
     
-    @Column(name="dni", nullable=false, unique=true)
-    private int dni;
+    @Column(name="dateOfBirth", nullable=false)
+    private Date dateOfBirth;
+
     
+    
+   
     public User() {}
     
-    public User(String username, String name) {
+    public User(String email, String password, String username, String name, Date dateOfBirth) {
+    	this.email = email;
+    	this.password = password;
     	this.username = username;
     	this.name = name;
+    	this.dateOfBirth = dateOfBirth;
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public String getUsername() {
 		return username;
@@ -50,19 +85,15 @@ public class User {
 		this.name = name;
 	}
 
-	public Long getId() {
-		return id;
+	public Date getDateOfBirth() {
+		return dateOfBirth;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
-	public Object getEmail() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-    
+	
     
 
 }

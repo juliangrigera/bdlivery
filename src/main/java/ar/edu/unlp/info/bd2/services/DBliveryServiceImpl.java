@@ -33,7 +33,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	
 	public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
-		User user = new User (username, name);
+		User user = new User (email, password, username, name, dateOfBirth);
         return repository.storeUser(user);
 	}
 
