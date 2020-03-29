@@ -21,6 +21,12 @@ public class User {
     @Column(name="userId")
     private Long id;
     
+    @Column(name="email", nullable=false, unique=true)
+    private String email;
+    
+    @Column(name="dni", nullable=false, unique=true)
+    private int dni;
+    
     public User() {}
     
     public User(String username, String name) {
@@ -50,6 +56,11 @@ public class User {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Object getEmail() {
+		// TODO Auto-generated method stub
+		return null;
 	}
     
     

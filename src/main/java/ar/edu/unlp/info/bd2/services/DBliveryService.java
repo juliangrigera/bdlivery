@@ -169,4 +169,6 @@ public interface DBliveryService {
 	 * @return Lista de productos
 	 */
 	List<Product> getProductByName(String name);
+
+	Product updateProductPrice(Object id, Float valueOf, Date startDate);
 }

@@ -1,9 +1,15 @@
 package ar.edu.unlp.info.bd2.services;
 
-import ar.edu.unlp.info.bd2.config.AppConfig;
-import ar.edu.unlp.info.bd2.config.HibernateConfiguration;
-import ar.edu.unlp.info.bd2.model.*;
-import ar.edu.unlp.info.bd2.repositories.DBliveryException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,15 +20,17 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unlp.info.bd2.config.AppConfig;
+import ar.edu.unlp.info.bd2.config.HibernateConfiguration;
+import ar.edu.unlp.info.bd2.model.Order;
+import ar.edu.unlp.info.bd2.model.Product;
+import ar.edu.unlp.info.bd2.model.Supplier;
+import ar.edu.unlp.info.bd2.model.User;
+import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {AppConfig.class, HibernateConfiguration.class}, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = { AppConfig.class, HibernateConfiguration.class}, loader = AnnotationConfigContextLoader.class)
 @Transactional
 @Rollback(true)
 public class DBliveryServiceTestCase {

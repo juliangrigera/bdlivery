@@ -130,6 +130,13 @@ public class DBliveryServiceImpl implements DBliveryService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public Product updateProductPrice(Object id, Float valueOf, Date startDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	
