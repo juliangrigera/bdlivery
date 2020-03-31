@@ -27,6 +27,12 @@ public class DBliveryRepository {
 		sessionFactory.getCurrentSession().save(supplier);
 		return supplier;
 		}
+
+	public Product storeProduct(Product p) {
+		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(p);
+		return p;
+	}
 	
 	
 }

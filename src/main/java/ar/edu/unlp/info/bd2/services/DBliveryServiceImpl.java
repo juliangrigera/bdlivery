@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import ar.edu.unlp.info.bd2.model.*;
-import ar.edu.unlp.info.bd2.model.Product;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 import ar.edu.unlp.info.bd2.repositories.DBliveryRepository;
 
@@ -20,7 +19,8 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
 		// TODO Auto-generated method stub
-		return null;
+		Product p = new Product(name, price, weight, supplier);
+		return repository.storeProduct(p);
 	}
 
 	

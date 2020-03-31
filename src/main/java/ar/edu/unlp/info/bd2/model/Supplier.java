@@ -41,14 +41,59 @@ public class Supplier {
 		this.coordY = coordY;
 	}
 
-	public Object getId() {
-		// TODO Auto-generated method stub
-		return this.id;
+
+	public String getName() {
+		return name;
 	}
 
-	public Object getName() {
-		// TODO Auto-generated method stub
-		return null;
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getCuil() {
+		return cuil;
+	}
+
+
+	public void setCuil(String cuil) {
+		this.cuil = cuil;
+	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+	public Float getCoordX() {
+		return coordX;
+	}
+
+
+	public void setCoordX(Float coordX) {
+		this.coordX = coordX;
+	}
+
+
+	public Float getCoordY() {
+		return coordY;
+	}
+
+
+	public void setCoordY(Float coordY) {
+		this.coordY = coordY;
+	}
+
+
+	public Long getId() {
+		return id;
 	}
 
 }

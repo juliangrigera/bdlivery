@@ -1,5 +1,8 @@
 package ar.edu.unlp.info.bd2.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,6 +19,11 @@ import javax.persistence.Table;
 @Table(name="historyPrice")
 public class HistoryPrice {
 
+	public HistoryPrice(Float price) {
+		super();
+		this.price = price;
+	}
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="histoeyPriceId")
@@ -23,11 +31,17 @@ public class HistoryPrice {
 	
 	@Column(name = "price", nullable = false)
     private Float price;
-	
-	@Column(name = "date", nullable = false)
-    private Date date;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productId", nullable = false)
-    private Product product;
+
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
 }

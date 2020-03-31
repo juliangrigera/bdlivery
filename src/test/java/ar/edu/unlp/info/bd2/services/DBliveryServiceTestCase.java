@@ -53,6 +53,7 @@ public class DBliveryServiceTestCase {
     public void testCreateSupplier() {
         Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
         assertNotNull(s1.getId());
+        assertEquals("Burger King",s1.getName());
     }
 
     @Test
