@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import ar.edu.unlp.info.bd2.model.*;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 import ar.edu.unlp.info.bd2.repositories.DBliveryRepository;
@@ -16,14 +18,14 @@ public class DBliveryServiceImpl implements DBliveryService {
 		this.repository = repository;
 	}
 
-	
+	@Transactional
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
 		// TODO Auto-generated method stub
 		Product p = new Product(name, price, weight, supplier);
 		return repository.storeProduct(p);
 	}
 
-	
+	@Transactional
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
 		// TODO Auto-generated method stub
 		Supplier s = new Supplier(name, cuil, address, coordX, coordY);
@@ -127,10 +129,10 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return null;
 	}
 
-	
+	@Transactional
 	public List<Product> getProductByName(String name) {
 		// TODO Auto-generated method stub
-		return null;
+		return repository.getProductByName(name);
 	}
 
 

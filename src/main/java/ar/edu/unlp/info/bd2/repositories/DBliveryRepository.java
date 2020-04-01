@@ -33,6 +33,17 @@ public class DBliveryRepository {
 		sessionFactory.getCurrentSession().save(p);
 		return p;
 	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductByName(String name) {
+	    Session session = sessionFactory.getCurrentSession();
+	    String stmt = "SELECT p FROM Product p WHERE p.name like ?1";
+	    Query<Product> query = session.createQuery(stmt);
+	    query.setParameter(1, "%"+name+"%");
+		List<Product> results = query.getResultList();
+	    return results;
+	}
 	
 	
 }
