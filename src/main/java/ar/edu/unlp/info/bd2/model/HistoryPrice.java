@@ -29,7 +29,7 @@ public class HistoryPrice {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="histoeyPriceId")
+    @Column(name="historyPriceId")
     private Long id;
 	
 	@Column(name = "price", nullable = false)

@@ -33,6 +33,11 @@ public class DBliveryRepository {
 		sessionFactory.getCurrentSession().save(p);
 		return p;
 	}
+	
+	public Order storeOrder(Order order) {
+		sessionFactory.getCurrentSession().save(order);
+		return order;
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Product> getProductByName(String name) {
@@ -55,6 +60,37 @@ public class DBliveryRepository {
 		@SuppressWarnings("unchecked")
 		Optional<Product> uniqueResultOptional = this.sessionFactory.getCurrentSession().createQuery("from Product where id = '" + id + "'").uniqueResultOptional();
 		return uniqueResultOptional;
+	}
+	
+	public Optional<User> getUserByUsername(String username){
+		String stmt = "SELECT u FROM User u WHERE u.username = :username";
+	    Session session = sessionFactory.getCurrentSession();
+	    
+	    Query<User> query = session.createQuery(stmt, User.class); 
+	    query.setParameter("username", username);
+	    return query.uniqueResultOptional();
+	}
+	
+	public Optional<User> getUserByEmail(String email){
+		String stmt = "SELECT u FROM User u WHERE u.email = :email";
+	    Session session = sessionFactory.getCurrentSession();
+	    
+	    Query<User> query = session.createQuery(stmt, User.class); 
+	    query.setParameter("email", email);
+	    return query.uniqueResultOptional();
+	}
+	
+	public Optional<User> getUserById(Long id){
+		@SuppressWarnings("unchecked")
+		Optional<User> uniqueResultOptional = this.sessionFactory.getCurrentSession().createQuery("from User where id = '" + id + "'").uniqueResultOptional();
+		return uniqueResultOptional; 
+	}
+	
+	public Optional<Order> getOrderById(Long id){
+		@SuppressWarnings("unchecked")
+		Optional<Order> uniqueResultOptional = this.sessionFactory.getCurrentSession().createQuery("from Order where id = '" + id + "'").uniqueResultOptional();
+		return uniqueResultOptional;
+		
 	}
 
 }

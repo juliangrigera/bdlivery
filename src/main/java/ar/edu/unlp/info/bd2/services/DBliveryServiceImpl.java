@@ -53,20 +53,23 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	
 	public Optional<User> getUserById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<User> u = repository.getUserById(id);
+		
+		return u;
 	}
 
 	
 	public Optional<User> getUserByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<User> u = repository.getUserByEmail(email);
+
+		return u;
 	}
 
 	
 	public Optional<User> getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<User> u = repository.getUserByUsername(username);
+		
+		return u;
 	}
 
 	
@@ -77,19 +80,29 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	
 	public Optional<Order> getOrderById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Order> o = repository.getOrderById(id);
+		
+		return o;
 	}
 
 	
 	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
-		// TODO Auto-generated method stub
-		return null;
+		Order order = new Order (dateOfOrder, address, coordX, coordY, client);
+        return repository.storeOrder(order);
 	}
 
 	
 	public Order addProduct(Long order, Long quantity, Product product) throws DBliveryException {
-		// TODO Auto-generated method stub
+		Optional<Order> op = this.repository.getOrderById(order);
+		
+		if(op.isPresent() ){
+			Order o = op.get();
+			
+			ProductOrder po = new ProductOrder(quantity, product);
+			
+			o.addProductOrder(po);
+			return o;
+		}
 		return null;
 	}
 
