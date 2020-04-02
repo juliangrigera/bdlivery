@@ -17,9 +17,11 @@ public class Product {
 		super();
 		this.name = name;
 		this.weigth = weigth;
-		this.price = price;
 		this.supplier = supplier;
-		this.addPrice(price);
+		this.historyPrice = new ArrayList<>();
+		Date date = new Date();
+		this.addPrice(price, date);
+		
 	}
 
 	@Id
@@ -68,7 +70,12 @@ public class Product {
 		this.price = price;
 	}
 
-	public void addPrice(Float price) {
+	public void addPrice(Float price, Date date) {
+		if(this.historyPrice.size() >= 1) {
+			HistoryPrice lastPrice = this.historyPrice.get(this.historyPrice.size()-1);
+			lastPrice.setEndDate(date);
+		}
+		this.setPrice(price);
 		HistoryPrice hp = new HistoryPrice(price);
 		this.setHistoryPrice(hp);
 	}

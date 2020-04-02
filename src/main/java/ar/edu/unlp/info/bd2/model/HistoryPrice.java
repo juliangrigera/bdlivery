@@ -21,7 +21,10 @@ public class HistoryPrice {
 
 	public HistoryPrice(Float price) {
 		super();
-		this.price = price;
+		this.setPrice(price);
+		Date date = new Date();
+		this.setStartDate(date);
+		this.setEndDate(null);
 	}
 
 	@Id
@@ -31,6 +34,12 @@ public class HistoryPrice {
 	
 	@Column(name = "price", nullable = false)
     private Float price;
+	
+	@Column(name = "startDate", nullable = false)
+	private Date startDate;
+	
+	@Column(name = "endDate")
+	private Date endDate;
 
 	public Float getPrice() {
 		return price;
@@ -42,6 +51,22 @@ public class HistoryPrice {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }

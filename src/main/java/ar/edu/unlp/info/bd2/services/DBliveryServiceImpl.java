@@ -42,6 +42,12 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	public Product updateProductPrice(Long id, Float price, Date startDate) throws DBliveryException {
 		// TODO Auto-generated method stub
+		Optional<Product> prod = this.repository.getProductByid(id);
+		if(prod.isPresent()) {
+			Product prd = prod.get();
+			prd.addPrice(price, startDate);
+			return prd;
+		}
 		return null;
 	}
 
@@ -66,7 +72,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	public Optional<Product> getProductById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getProductByid(id);
 	}
 
 	
