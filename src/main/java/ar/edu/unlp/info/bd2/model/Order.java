@@ -60,7 +60,7 @@ public class Order {
 		this.client = client;
 		
 		this.deliveryUser = null;
-		this.actualState = new OrderStatus("pending");
+		this.actualState = new OrderStatus("Pending");
 		this.productOrders = new ArrayList<>();
 		this.collectionOrderStatus = new ArrayList<>();
 		this.addOrderStatus(this.actualState); // q te parece??
