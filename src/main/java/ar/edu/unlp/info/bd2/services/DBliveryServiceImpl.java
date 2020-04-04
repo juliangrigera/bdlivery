@@ -109,6 +109,15 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	public Order deliverOrder(Long order, User deliveryUser) throws DBliveryException {
 		// TODO Auto-generated method stub
+		Optional<Order> order1 = this.getOrderById(order);
+		if (order1.isPresent()){
+			Order o = order1.get();
+			o.setDeliveryUser(deliveryUser);
+			OrderStatus newState = new OrderStatus("Send");
+			o.setActualState(newState);
+			o.addOrderStatus(newState);
+			return o;
+		}
 		return null;
 	}
 
