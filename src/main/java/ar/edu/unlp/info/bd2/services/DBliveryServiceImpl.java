@@ -120,6 +120,17 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	public Order cancelOrder(Long order) throws DBliveryException {
 		// TODO Auto-generated method stub
+		Optional<Order> o = this.repository.getOrderById(order);
+		if (!this.canCancel(order) || o.isEmpty() ) {
+			throw new DBliveryException("The order can't be cancelled");
+		}
+		if(o.isPresent()) {
+			Order o1 = o.get();
+			OrderStatus newState = new OrderStatus("Cancelled");
+			o1.setActualState(newState);
+			o1.addOrderStatus(newState);
+			return o1;
+		}
 		return null;
 	}
 
@@ -134,7 +145,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		if (o.isPresent()) {
 			Order o1 = o.get();
 			String status = o1.getActualState().getStatus();
-			if (status == "pending") {
+			if (status == "Pending") {
 				return true;
 			}
 		} // "devuelve una exception porque no existe la orden"
