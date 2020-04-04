@@ -127,12 +127,27 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	public boolean canCancel(Long order) throws DBliveryException {
 		// TODO Auto-generated method stub
+		Optional<Order> o = this.repository.getOrderById(order);
+		if(o.isPresent()) {
+			Order o1 = o.get();
+			String status = o1.getActualState().getStatus();
+			if (status == "pending") {
+				return true;
+			}
+		} // "devuelve una exception porque no existe la orden"
 		return false;
 	}
 
-	
+	@Transactional
 	public boolean canFinish(Long id) throws DBliveryException {
 		// TODO Auto-generated method stub
+		Optional<Order> o = this.repository.getOrderById(id);
+		if(o.isPresent()) {
+			Order o1 = o.get();
+			if (o1.getActualState().getStatus() == "Send") {
+				return true;
+			}
+		}
 		return false;
 	}
 
