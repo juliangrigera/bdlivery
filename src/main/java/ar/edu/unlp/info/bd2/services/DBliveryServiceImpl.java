@@ -173,6 +173,11 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	public OrderStatus getActualStatus(Long order) {
 		// TODO Auto-generated method stub
+		Optional<Order> o = this.repository.getOrderById(order);
+		if (o.isPresent()) {
+			Order order1 = o.get();
+			return order1.getActualState();
+		}
 		return null;
 	}
 
