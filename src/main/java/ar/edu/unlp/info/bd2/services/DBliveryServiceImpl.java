@@ -136,6 +136,18 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	public Order finishOrder(Long order) throws DBliveryException {
 		// TODO Auto-generated method stub
+		Optional<Order> o = this.repository.getOrderById(order);
+		if (this.canFinish(order)) {
+			if(o.isPresent()) {
+				Order o1 = o.get();
+				OrderStatus newState = new OrderStatus("Delivered");
+				o1.setActualState(newState);
+				o1.addOrderStatus(newState);
+				return o1;
+			}
+		}else {
+			throw new DBliveryException("The order can't be cancelled");
+		}
 		return null;
 	}
 
