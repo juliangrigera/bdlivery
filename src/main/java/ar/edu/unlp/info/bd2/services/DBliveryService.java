@@ -18,6 +18,7 @@ public interface DBliveryService extends DBliveryStatisticsService{
 	 * @return el producto creado
 	 */
 	Product createProduct(String name, Float price, Float weight, Supplier supplier);
+	Product createProduct(String name, Float price, Float weight, Supplier supplier, Date date);
 
 	/**
 	 * Crea y retorna un nuevo Productor

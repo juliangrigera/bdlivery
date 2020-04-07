@@ -43,11 +43,6 @@ public class DBliveryStatisticsTestCase {
     public void prepareDB() throws Exception {
         this.initializer.prepareDB();
     }
-
-    /*@Test
-    public void testOne(){
-        assertEquals(1,1);
-    }*/
     
     @Test
     public void testGetAllOrdersMadeByUser() {
@@ -63,9 +58,9 @@ public class DBliveryStatisticsTestCase {
     
     @Test
     public void testGetTopNSuppliers() {
-    	List<Supplier> suppliers = this.service.getTopNSuppliersInSentOrders(3);
-    	assertEquals(3,suppliers.size());
-    	this.assertListEquality(suppliers.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("La Trattoria", "Olivia Pizzas & Empanadas", "El Ladrillo"));
+    	List<Supplier> suppliers = this.service.getTopNSuppliersInSentOrders(4);
+    	assertEquals(4,suppliers.size());
+    	this.assertListEquality(suppliers.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("La Trattoria", "Olivia Pizzas & Empanadas", "El Ladrillo", "Pizza Nova"));
     }
     
     @Test
