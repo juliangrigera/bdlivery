@@ -155,6 +155,8 @@ public class Order {
 		//FALTA IMPLEMENTAR! ..CONTROLAR! Si no es pending no puedo cancelar!
 		
 		this.collectionOrderStatus.add(orderStatus);
+		this.actualState = orderStatus;
+		
 	}
 	
 	/*--------------------------------------------------*/

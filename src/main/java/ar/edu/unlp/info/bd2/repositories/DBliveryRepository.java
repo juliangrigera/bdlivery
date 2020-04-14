@@ -17,6 +17,16 @@ public class DBliveryRepository {
 
 	@Autowired
 	SessionFactory sessionFactory;
+	
+	public Product updateProduct(Product p){
+		sessionFactory.getCurrentSession().update(p);
+		return p;
+	}
+	
+	public Order updateOrder(Order o){
+		sessionFactory.getCurrentSession().update(o);
+		return o;
+	}
 
 	public User storeUser(User user) {
 		sessionFactory.getCurrentSession().save(user);
@@ -39,27 +49,24 @@ public class DBliveryRepository {
 		return order;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Product> getProductByName(String name) {
-		Session session = sessionFactory.getCurrentSession();
 		String stmt = "SELECT p FROM Product p WHERE p.name like ?1";
-		Query<Product> query = session.createQuery(stmt);
-		query.setParameter(1, "%" + name + "%");
-		List<Product> results = query.getResultList();
+	    Session session = sessionFactory.getCurrentSession();
+	   
+	    Query<Product> query = session.createQuery(stmt, Product.class); 
+	    query.setParameter(1,"%" + name + "%");
+	    List<Product> results = query.getResultList();
 		return results;
-	}
-
-	public Product updateProductPrice(Long id, Float price, Date startDate) {
-		// TODO Auto-generated method stub
-		this.sessionFactory.getCurrentSession();
-		return null;
+		
 	}
 
 	public Optional<Product> getProductByid(Long id) {
-		// TODO Auto-generated method stub
-		@SuppressWarnings("unchecked")
-		Optional<Product> uniqueResultOptional = this.sessionFactory.getCurrentSession().createQuery("from Product where id = '" + id + "'").uniqueResultOptional();
-		return uniqueResultOptional;
+		String stmt = "SELECT p FROM Product p WHERE p.id = :id";
+	    Session session = sessionFactory.getCurrentSession();
+	    
+	    Query<Product> query = session.createQuery(stmt, Product.class); 
+	    query.setParameter("id", id);
+	    return query.uniqueResultOptional();
 	}
 	
 	public Optional<User> getUserByUsername(String username){
@@ -81,16 +88,21 @@ public class DBliveryRepository {
 	}
 	
 	public Optional<User> getUserById(Long id){
-		@SuppressWarnings("unchecked")
-		Optional<User> uniqueResultOptional = this.sessionFactory.getCurrentSession().createQuery("from User where id = '" + id + "'").uniqueResultOptional();
-		return uniqueResultOptional; 
+		String stmt = "SELECT u FROM User u WHERE u.id = :id";
+	    Session session = sessionFactory.getCurrentSession();
+	    
+	    Query<User> query = session.createQuery(stmt, User.class); 
+	    query.setParameter("id", id);
+	    return query.uniqueResultOptional();
 	}
 	
 	public Optional<Order> getOrderById(Long id){
-		@SuppressWarnings("unchecked")
-		Optional<Order> uniqueResultOptional = this.sessionFactory.getCurrentSession().createQuery("from Order where id = '" + id + "'").uniqueResultOptional();
-		return uniqueResultOptional;
-		
+		String stmt = "SELECT o FROM Order o WHERE o.id = :id";
+	    Session session = sessionFactory.getCurrentSession();
+	    
+	    Query<Order> query = session.createQuery(stmt, Order.class); 
+	    query.setParameter("id", id);
+	    return query.uniqueResultOptional();
 	}
 
 }

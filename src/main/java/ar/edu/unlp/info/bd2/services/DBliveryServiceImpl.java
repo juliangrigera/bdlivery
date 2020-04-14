@@ -37,18 +37,21 @@ public class DBliveryServiceImpl implements DBliveryService {
 		User user = new User(email, password, username, name, dateOfBirth);
 		return repository.storeUser(user);
 	}
-
-	public Product updateProductPrice(Long id, Float price, Date startDate) {
+	
+	public Product updateProductPrice(Long id, Float price, Date startDate) throws DBliveryException {
 		// TODO Auto-generated method stub
 		Optional<Product> prod = this.getProductById(id);
-		if (prod.isPresent()) {
-			Product prd = prod.get();
-			prd.addPrice(price, startDate);
-			return prd;
+		if (!prod.isPresent() ) {
+			throw new DBliveryException("The product does not exist");
 		}
-		return null;
-	}
 
+		Product prd = prod.get();
+		prd.addPrice(price, startDate);
+
+		return repository.updateProduct(prd);
+		
+	}
+	
 	public Optional<User> getUserById(Long id) {
 		Optional<User> u = repository.getUserById(id);
 
@@ -86,50 +89,74 @@ public class DBliveryServiceImpl implements DBliveryService {
 	public Order addProduct(Long order, Long quantity, Product product) throws DBliveryException {
 		Optional<Order> op = this.repository.getOrderById(order);
 
-		if (op.isPresent()) {
-			Order o = op.get();
-
-			ProductOrder po = new ProductOrder(quantity, product);
-
-			o.addProductOrder(po);
-			return o;
-		}else {
+		if (!op.isPresent() ) {
 			throw new DBliveryException("The order doesnt exists");
 		}
-	}
 
-	public void addDeliveryUser(User deliveryUser, Long id) {
-		Optional<Order> order1 = this.getOrderById(id);
-		if(order1.isPresent()){
-			Order order2 = order1.get();
-			order2.setDeliveryUser(deliveryUser);
-		}
+		Order o = op.get();
+		ProductOrder po = new ProductOrder(quantity, product);
+		o.addProductOrder(po);
+
+		return repository.updateOrder(o);
 	}
+	
 	public Order deliverOrder(Long order, User deliveryUser) throws DBliveryException {
-		if (this.canDeliver(order)) {
-			this.addDeliveryUser(deliveryUser, order);
-			return this.addStatus("Send", order);
+		Optional<Order> op = this.getOrderById(order);
+
+		if(!op.isPresent() ){
+			throw new DBliveryException("Order does not exist");
+		}
+			
+		if (!this.canDeliver(order)) {
+			throw new DBliveryException("The order can't be delivered");
 		} 
-		throw new DBliveryException("The order can't be delivered");
+
+		Order o = op.get();
+
+		o.setDeliveryUser(deliveryUser);
+		OrderStatus sent = new OrderStatus("Sent");
+		o.addOrderStatus(sent); //Este metodo setea el actualState!
+
+		return repository.updateOrder(o);
 	}
 	
 
 	public Order cancelOrder(Long order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		if (this.canCancel(order)) {
-			return this.addStatus("Cancelled", order);
+		Optional<Order> op = this.getOrderById(order);
+
+		if(!op.isPresent() ){
+			throw new DBliveryException("Order does not exist");
 		}
-		throw new DBliveryException("The order can't be cancelled");
+
+		if (!this.canCancel(order) ) {
+			throw new DBliveryException("The order can't be cancelled");
+		}
+
+		Order o = op.get();
+
+		OrderStatus cancelled = new OrderStatus("Cancelled");
+		o.addOrderStatus(cancelled);
+		 
+		 return repository.updateOrder(o);
 	}
 
 	public Order finishOrder(Long order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		if (this.canFinish(order)) {
-			return this.addStatus("Delivered", order);
+		Optional<Order> op = this.getOrderById(order);
+
+		if(!op.isPresent() ){
+			throw new DBliveryException("Order does not exist");
 		}
-		else {
-			throw new DBliveryException("The order can't be cancelled");
+
+		if (!this.canFinish(order) ) {
+			throw new DBliveryException("The order can't be delivered");
 		}
+
+		Order o = op.get();
+
+		OrderStatus delivered = new OrderStatus("Delivered");
+		o.addOrderStatus(delivered);
+		 
+		 return repository.updateOrder(o);
 	}
 
 	public boolean canCancel(Long order) throws DBliveryException {
@@ -155,7 +182,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		Optional<Order> o = this.getOrderById(id);
 		if (o.isPresent()) {
 			Order o1 = o.get();
-			if (o1.getActualState().getStatus() == "Send") {
+			if (o1.getActualState().getStatus() == "Sent") {
 				return true;
 			}
 		}
@@ -180,18 +207,6 @@ public class DBliveryServiceImpl implements DBliveryService {
 		}
 		return false;
 	}
-	
-	public Order addStatus(String status, Long order) {
-		Optional<Order> o = this.getOrderById(order);
-		if (o.isPresent()) {
-			Order order1 = o.get();
-			OrderStatus newState = new OrderStatus(status);
-			order1.setActualState(newState);
-			order1.addOrderStatus(newState);
-			return order1;
-		}
-		return null;
-	}
 
 	public OrderStatus getActualStatus(Long order) {
 		// TODO Auto-generated method stub
@@ -199,6 +214,8 @@ public class DBliveryServiceImpl implements DBliveryService {
 		if (o.isPresent()) {
 			Order order1 = o.get();
 			return order1.getActualState();
+			
+			//NO TRAEMOS EL ACTUAL STATUS DE LA BASE
 		}
 		return null;
 	}
