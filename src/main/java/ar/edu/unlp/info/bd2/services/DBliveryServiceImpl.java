@@ -211,13 +211,13 @@ public class DBliveryServiceImpl implements DBliveryService {
 	public OrderStatus getActualStatus(Long order) {
 		// TODO Auto-generated method stub
 		Optional<Order> o = this.getOrderById(order);
-		if (o.isPresent()) {
-			Order order1 = o.get();
-			return order1.getActualState();
-			
-			//NO TRAEMOS EL ACTUAL STATUS DE LA BASE
+		if (!o.isPresent()) {
+			return null;
 		}
-		return null;
+		//La orden existe por lo tanto si o si tiene un estado
+		OrderStatus os = repository.getActualState(order);
+		return os;
+		
 	}
 
 	@Transactional

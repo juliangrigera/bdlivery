@@ -104,5 +104,17 @@ public class DBliveryRepository {
 	    query.setParameter("id", id);
 	    return query.uniqueResultOptional();
 	}
+	
+	
+	public OrderStatus getActualState(Long orderId) {
+		String stmt = "SELECT os FROM OrderStatus os WHERE os.id = (SELECT o.actualState FROM Order o WHERE o.id = :orderId)";
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<OrderStatus> query = session.createQuery(stmt, OrderStatus.class);
+		query.setParameter("orderId", orderId);
+		OrderStatus os = query.uniqueResult();
+		   
+		return os;
+	}
 
 }
