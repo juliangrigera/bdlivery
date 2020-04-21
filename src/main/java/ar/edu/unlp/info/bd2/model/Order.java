@@ -152,11 +152,26 @@ public class Order {
 	}
 	
 	public void addOrderStatus(OrderStatus orderStatus) {
-		//FALTA IMPLEMENTAR! ..CONTROLAR! Si no es pending no puedo cancelar!
 		
 		this.collectionOrderStatus.add(orderStatus);
 		this.actualState = orderStatus;
 		
+	}
+	
+	public void addOrderStatus(OrderStatus orderStatus, Date date) {
+		if(this.collectionOrderStatus.size() >= 1) {
+			OrderStatus lastOrderStatus = this.collectionOrderStatus.get(this.collectionOrderStatus.size()-1);
+			lastOrderStatus.setEndDate(date); //Falta volver a agregar al array?
+		}
+		this.actualState = orderStatus;
+		
+		this.collectionOrderStatus.add(orderStatus);
+	}
+	
+	public Float getAmount() {
+		
+		Float f = (float) 1;
+		return f;
 	}
 	
 	/*--------------------------------------------------*/

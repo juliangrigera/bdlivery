@@ -31,6 +31,7 @@ public class Supplier {
 	@Column(name="coordY", nullable=false)
 	private Float coordY;
 	
+	public Supplier() {}
 	
 	public Supplier(String name, String cuil, String address, Float coordX, Float coordY) {
 		// TODO Auto-generated constructor stub

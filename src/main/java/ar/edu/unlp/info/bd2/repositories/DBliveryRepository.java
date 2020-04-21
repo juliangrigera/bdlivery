@@ -107,7 +107,7 @@ public class DBliveryRepository {
 	
 	
 	public OrderStatus getActualState(Long orderId) {
-		String stmt = "SELECT os FROM OrderStatus os WHERE os.id = (SELECT o.actualState FROM Order o WHERE o.id = :orderId)";
+		String stmt = "SELECT os FROM OrderStatus os WHERE os.id = (SELECT o.actualState.id FROM Order o WHERE o.id = :orderId)"; //o.actualState.id
 		Session session = sessionFactory.getCurrentSession();
 		   
 		Query<OrderStatus> query = session.createQuery(stmt, OrderStatus.class);

@@ -13,8 +13,9 @@ import java.util.List;
 @Table(name="product")
 public class Product {
 	
+	public Product() {}
+	
 	public Product(String name, Float weigth, Float price, Supplier supplier) {
-		super();
 		this.name = name;
 		this.weigth = weigth;
 		this.supplier = supplier;
@@ -22,6 +23,15 @@ public class Product {
 		Date date = new Date();
 		this.addPrice(price, date);
 		
+	}
+	
+	public Product(String name, Float weigth, Float price, Supplier supplier, Date actualDate) {
+		this.name = name;
+		this.weigth = weigth;
+		this.supplier = supplier;
+		this.historyPrice = new ArrayList<>();
+		Date date = actualDate;
+		this.addPrice(price, date);
 	}
 
 	@Id

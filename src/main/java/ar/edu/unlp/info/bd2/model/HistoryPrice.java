@@ -18,6 +18,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="historyPrice")
 public class HistoryPrice {
+	
+	public HistoryPrice() {}
 
 	public HistoryPrice(Float price) {
 		super();
