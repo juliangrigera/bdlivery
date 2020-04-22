@@ -172,4 +172,14 @@ public class DBliveryRepository {
 		return results;
 	}
 
+	public Product getBestSellingProduct() {
+		String stmt = "SELECT p FROM Order o join o.productOrders po join po.product p group by p order by count(p) desc";
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<Product> query = session.createQuery(stmt, Product.class);
+		query.setMaxResults(1);
+		Product result = query.uniqueResult();
+		return result;
+	}
+
 }

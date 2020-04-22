@@ -335,8 +335,8 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Product getBestSellingProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		Product product = repository.getBestSellingProduct();
+		return product;
 	}
 
 	@Override
