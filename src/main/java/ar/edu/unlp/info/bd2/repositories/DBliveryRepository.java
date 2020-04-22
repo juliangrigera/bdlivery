@@ -117,4 +117,22 @@ public class DBliveryRepository {
 		return os;
 	}
 
+	public List<Order> getPendingOrders() {
+		String stmt = "SELECT o FROM Order o join o.actualState os WHERE os.status='Pending'";
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<Order> query = session.createQuery(stmt, Order.class);
+		List<Order> results = query.getResultList();
+		return results;
+	}
+
+	public List<Order> getSentOrders() {
+		String stmt = "SELECT o FROM Order o join o.actualState os WHERE os.status='Sent'";
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<Order> query = session.createQuery(stmt, Order.class);
+		List<Order> results = query.getResultList();
+		return results;
+	}
+
 }

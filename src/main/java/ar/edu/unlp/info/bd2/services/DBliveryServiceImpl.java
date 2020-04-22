@@ -191,7 +191,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		Optional<Order> o = this.getOrderById(order);
 		if (o.isPresent()) {
 			Order o1 = o.get();
-			
+			System.out.println("!!!!!!!!!!XXXXgetActualStatus:" + o1.getActualState().getStatus());
 			if(o1.getActualState().getStatus().equals("Pending") ) {
 				return true;
 			}
@@ -296,14 +296,14 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Order> getPendingOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Order> o = repository.getPendingOrders();
+		return o;
 	}
 
 	@Override
 	public List<Order> getSentOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Order> o = repository.getSentOrders();
+		return o;
 	}
 
 	@Override
