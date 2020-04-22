@@ -116,5 +116,42 @@ public class DBliveryRepository {
 		   
 		return os;
 	}
+	
+	public List<Order> getAllOrdersMadeByUser(String username){
+		String stmt = "SELECT o from Order o join o.client c WHERE c.username=:username"; 
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<Order> query = session.createQuery(stmt, Order.class);
+		query.setParameter("username", username);
+		List<Order> results = query.getResultList();
+		return results;
+	}
+	
+	public List<Supplier> getTopNSuppliersInSentOrders(int n){
+		String stmt = ("SELECT s from Order o "
+		+"join o.actualState estado "
+		+"join o.productOrders po "
+		+"join po.product p "
+		+"join p.supplier s "
+		+"where estado.status='Sent' or estado.status='Pending' "
+		+"group by s.id "
+		+"order by count(s) desc");
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<Supplier> query = session.createQuery(stmt, Supplier.class);
+		query.setMaxResults(n);
+		List<Supplier> results = query.getResultList();
+		return results;
+	}
+	
+	public List<Product> getTop10MoreExpensiveProducts(){
+		String stmt = ("SELECT p from Product as p order by p.price desc");
+		Session session = sessionFactory.getCurrentSession();
+				   
+		Query<Product> query = session.createQuery(stmt, Product.class);
+		query.setMaxResults(9);
+		List<Product> results = query.getResultList();
+		return results;
+	}
 
 }
