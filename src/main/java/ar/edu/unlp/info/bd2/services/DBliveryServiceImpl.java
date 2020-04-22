@@ -260,8 +260,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Order> getAllOrdersMadeByUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getAllOrdersMadeByUser(username);
 	}
 
 	@Override
@@ -272,14 +271,12 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getTopNSuppliersInSentOrders(n);
 	}
 
 	@Override
 	public List<Product> getTop10MoreExpensiveProducts() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getTop10MoreExpensiveProducts();
 	}
 
 	@Override
