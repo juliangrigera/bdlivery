@@ -182,4 +182,14 @@ public class DBliveryRepository {
 		return result;
 	}
 
+	public List<Order> getDeliveredOrdersForUser(String username) {
+		String stmt = "SELECT o FROM Order o join o.client c join o.actualState acState WHERE c.username = :username and acState.status='Delivered'";
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<Order> query = session.createQuery(stmt, Order.class);
+		query.setParameter("username", username);
+		List<Order> results = query.getResultList();
+		return results;
+	}
+
 }
