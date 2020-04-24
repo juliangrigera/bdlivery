@@ -177,7 +177,7 @@ public class DBliveryRepository {
 		Session session = sessionFactory.getCurrentSession();
 		   
 		Query<Product> query = session.createQuery(stmt, Product.class);
-		query.setMaxResults(1);
+		query.setMaxResults(1); //ESTO ESTA BIEN?? Despues lo miro
 		Product result = query.uniqueResult();
 		return result;
 	}
@@ -191,5 +191,43 @@ public class DBliveryRepository {
 		List<Order> results = query.getResultList();
 		return results;
 	}
-
+	
+	public List<User> getTop6UsersMoreOrders(){
+		String stmt = "SELECT o.client FROM Order o group by o.client order by count(o.client) desc";
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<User> query = session.createQuery(stmt, User.class);
+		query.setMaxResults(6);
+		List<User> results = query.getResultList();
+		return results;
+	}
+	
+	public List<Order> getCancelledOrdersInPeriod(Date startDate, Date endDate){
+		//Hay que probar sacando distinct....creo q no hace falta
+		String stmt = "SELECT distinct o from Order o join o.actualState acstate WHERE acstate.startDate between :startDate and :endDate and acstate.status='Cancelled'";
+		
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<Order> query = session.createQuery(stmt, Order.class);
+		query.setParameter("startDate", startDate);
+		query.setParameter("endDate", endDate);
+		List<Order> results = query.getResultList();
+		return results;
+	
+	}
+	
+	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate){
+		String stmt = "SELECT distinct o from Order o join o.actualState acstate WHERE acstate.startDate between :startDate and :endDate and acstate.status='Delivered'";
+		
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<Order> query = session.createQuery(stmt, Order.class);
+		query.setParameter("startDate", startDate);
+		query.setParameter("endDate", endDate);
+		List<Order> results = query.getResultList();
+		return results;
+	}
+	
+	
+	
 }

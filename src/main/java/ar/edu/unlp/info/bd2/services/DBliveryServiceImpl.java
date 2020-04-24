@@ -280,14 +280,12 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<User> getTop6UsersMoreOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getTop6UsersMoreOrders();
 	}
 
 	@Override
 	public List<Order> getCancelledOrdersInPeriod(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getCancelledOrdersInPeriod(startDate, endDate);
 	}
 
 	@Override
@@ -304,8 +302,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getDeliveredOrdersInPeriod(startDate, endDate);
 	}
 
 	@Override
@@ -317,7 +314,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Override
 	public List<Order> getSentMoreOneHour() {
 		// TODO Auto-generated method stub
-		return null;
+				return null;
 	}
 
 	@Override
