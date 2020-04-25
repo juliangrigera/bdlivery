@@ -228,6 +228,56 @@ public class DBliveryRepository {
 		return results;
 	}
 	
+	public List<Order> getSentMoreOneHour(){
+		String stmt = "select o.ord from OrderStatus o inner join OrderStatus u "
+		+"on (u.ord = o.ord) "
+		+"where o.status='Pending' and u.status='Sent' "
+		+"and ( ( (u.startDate - o.startDate)/10000)>=24)";
+		
+		Session session = sessionFactory.getCurrentSession();
+		   
+		Query<Order> query = session.createQuery(stmt, Order.class);
+		
+		List<Order> results = query.getResultList();
+		return results;
+	}
+	
+	public List<Order> getDeliveredOrdersSameDay(){
+		String stmt = "select o.ord from OrderStatus o inner join OrderStatus u "
+		+"on(u.ord = o.ord) "
+		+"where o.status='Pending' and u.status='Delivered' "
+		+"and (DATE(u.startDate) = DATE(o.startDate))";
+				
+		Session session = sessionFactory.getCurrentSession();
+				   
+		Query<Order> query = session.createQuery(stmt, Order.class);
+				
+		List<Order> results = query.getResultList();
+		return results;
+	}
+	
+	public List<User> get5LessDeliveryUsers(){
+		String stmt = "select o.deliveryUser from Order o join o.actualState acstate "
+		+"where acstate.status='Delivered' or acstate.status='Sent' "
+		+"group by o.deliveryUser order by count(o.deliveryUser)";
+						
+		Session session = sessionFactory.getCurrentSession();
+						   
+		Query<User> query = session.createQuery(stmt, User.class);
+		query.setMaxResults(5);
+		List<User> results = query.getResultList();
+		return results;
+	}
+	
+	public List<Product> getProductsOnePrice(){
+		String stmt = "from Product p where p.historyPrice.size = 1";
+								
+		Session session = sessionFactory.getCurrentSession();
+								   
+		Query<Product> query = session.createQuery(stmt, Product.class);
+		List<Product> results = query.getResultList();
+		return results;
+	}
 	
 	
 }

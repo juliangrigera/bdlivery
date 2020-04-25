@@ -24,18 +24,24 @@ public class OrderStatus {
 	@Column(name = "endDate")
 	private Date endDate;
 	
+	@ManyToOne
+	@JoinColumn(name = "orderId")
+	private Order ord;
+	
 	public OrderStatus() {}
 	
 	public OrderStatus(String status) {
 		this.status = status;
 		this.startDate = null;
 		this.endDate = null;
+		this.ord = null; //ESTO NO SE SI ESTA BIEN!!! sino habria q cambiar en todos esto
 	}
 	
-	public OrderStatus(String status, Date date) {
+	public OrderStatus(String status, Order ord, Date date) {
 		this.status = status;
 		this.startDate = date;
 		this.endDate = null;
+		this.ord = ord;
 	}
 	
 	public Long getId() {

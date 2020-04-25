@@ -44,6 +44,7 @@ public class Order {
 	private List<ProductOrder> productOrders = new ArrayList<ProductOrder>();
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy("startDate")
 	@JoinColumn(name = "orderId")
 	private List<OrderStatus> collectionOrderStatus = new ArrayList<OrderStatus>();
 	
@@ -60,7 +61,7 @@ public class Order {
 		this.client = client;
 		
 		this.deliveryUser = null;
-		this.actualState = new OrderStatus("Pending");
+		this.actualState = new OrderStatus("Pending", this, dateOfOrder); //NUEVO! NO LO TENIAMOS EN CUENTA!
 		this.productOrders = new ArrayList<>();
 		this.collectionOrderStatus = new ArrayList<>();
 		this.addOrderStatus(this.actualState); // q te parece??
@@ -166,6 +167,19 @@ public class Order {
 		this.actualState = orderStatus;
 		
 		this.collectionOrderStatus.add(orderStatus);
+	}
+	
+	public void addOrderStatus(String status, Date date) {
+		OrderStatus os = new OrderStatus(status, this, date);
+		
+		if(this.collectionOrderStatus.size() >= 1) {
+			OrderStatus lastOrderStatus = this.collectionOrderStatus.get(this.collectionOrderStatus.size()-1);
+			lastOrderStatus.setEndDate(date); //Falta volver a agregar al array?
+		}
+		this.actualState = os;
+		
+		this.collectionOrderStatus.add(os);
+		
 	}
 	
 	public Float getAmount() {

@@ -313,20 +313,17 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Order> getSentMoreOneHour() {
-		// TODO Auto-generated method stub
-				return null;
+		return repository.getSentMoreOneHour();
 	}
 
 	@Override
 	public List<Order> getDeliveredOrdersSameDay() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getDeliveredOrdersSameDay();
 	}
 
 	@Override
 	public List<User> get5LessDeliveryUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.get5LessDeliveryUsers();
 	}
 
 	@Override
@@ -337,8 +334,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Product> getProductsOnePrice() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getProductsOnePrice();
 	}
 
 	@Override
@@ -414,8 +410,8 @@ public class DBliveryServiceImpl implements DBliveryService {
 		Order o = op.get();
 
 		o.setDeliveryUser(deliveryUser);
-		OrderStatus sent = new OrderStatus("Sent", date);
-		o.addOrderStatus(sent, date); //Este metodo setea el actualState!
+		//OrderStatus sent = new OrderStatus("Sent", date);
+		o.addOrderStatus("Sent", date);
 		
 		return repository.updateOrder(o);
 	}
@@ -436,8 +432,8 @@ public class DBliveryServiceImpl implements DBliveryService {
 		
 		Order o = op.get();
 
-		OrderStatus cancelled = new OrderStatus("Cancelled", date);
-		o.addOrderStatus(cancelled, date);
+		//OrderStatus cancelled = new OrderStatus("Cancelled", date);
+		o.addOrderStatus("Cancelled", date);
 		 
 		return repository.updateOrder(o);
 	}
@@ -458,8 +454,8 @@ public class DBliveryServiceImpl implements DBliveryService {
 		
 		Order o = op.get();
 
-		OrderStatus delivered = new OrderStatus("Delivered", date);
-		o.addOrderStatus(delivered, date);
+		//OrderStatus delivered = new OrderStatus("Delivered", date);
+		o.addOrderStatus("Delivered", date);
 		 
 		return repository.updateOrder(o);
 	}
