@@ -280,13 +280,14 @@ public class DBliveryRepository {
 	}
 	
 	public List<Product> getProductIncreaseMoreThan100(){
-		String stmt = "select p from Product p where p.id IN ( "
-		+"select pp.id from Product pp join pp.historyPrice hp "
-		+"where (p.id, hp.startDate) IN ( "
-		+"select hpp.product.id, min(hpp.startDate) from HistoryPrice hpp "
-		+"group by (hpp.product.id) )"
-		+"and (p.price / 2) > hp.price)";
-		
+		String stmt = "select p from HistoryPrice hp inner join Product p on(p.id = hp.product) where hp.product in (SELECT hp2.product from HistoryPrice hp2 where hp.price*2 <= hp2.price)";
+//		String stmt = "select p from Product p where p.id IN ( "
+//		+"select pp.id from Product pp join pp.historyPrice hp "
+//		+"where (p.id, hp.startDate) IN ( "
+//		+"select hpp.product.id, min(hpp.startDate) from HistoryPrice hpp "
+//		+"group by (hpp.product.id) )"
+//		+"and (p.price / 2) > hp.price)";
+//		
 		Session session = sessionFactory.getCurrentSession();
 								   
 		Query<Product> query = session.createQuery(stmt, Product.class);
@@ -295,9 +296,7 @@ public class DBliveryRepository {
 	}
 	
 	public Supplier getSupplierLessExpensiveProduct() {
-		String stmt = "select s from Product p join p.historyPrice h "
-		+"join p.supplier s "
-		+"order by h.price";
+		String stmt = "select s from Product p join p.supplier s order by p.price";
 		
 		Session session = sessionFactory.getCurrentSession();
 								   
