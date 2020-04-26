@@ -339,32 +339,27 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Product> getProductIncreaseMoreThan100() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getProductIncreaseMoreThan100();
 	}
 
 	@Override
 	public Supplier getSupplierLessExpensiveProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getSupplierLessExpensiveProduct();
 	}
 
 	@Override
 	public List<Supplier> getSuppliersDoNotSellOn(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getSuppliersDoNotSellOn(day);
 	}
 
 	@Override
 	public List<Product> getSoldProductsOn(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getSoldProductsOn(day);
 	}
 
 	@Override
 	public List<Order> getOrdersCompleteMorethanOneDay() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getOrdersCompleteMorethanOneDay();
 	}
 
 	@Override
@@ -375,8 +370,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Product> getProductsNotSold() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getProductsNotSold();
 	}
 
 	@Override

@@ -22,12 +22,22 @@ public class HistoryPrice {
 	public HistoryPrice() {}
 
 	public HistoryPrice(Float price) {
-		super();
 		this.setPrice(price);
 		Date date = new Date();
 		this.setStartDate(date);
 		this.setEndDate(null);
+		this.product = null; //contemplando el tp1
 	}
+	
+	public HistoryPrice(Float price, Date date, Product product) {
+		this.price = price;
+		this.startDate = date;
+		this.endDate = null;
+		this.product = product;
+		
+	}
+	
+	
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +52,10 @@ public class HistoryPrice {
 	
 	@Column(name = "endDate")
 	private Date endDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "productId")
+	private Product product;
 
 	public Float getPrice() {
 		return price;
@@ -70,5 +84,15 @@ public class HistoryPrice {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
+	
 
 }

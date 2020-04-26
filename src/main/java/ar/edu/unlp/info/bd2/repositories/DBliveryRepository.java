@@ -279,5 +279,82 @@ public class DBliveryRepository {
 		return results;
 	}
 	
+	public List<Product> getProductIncreaseMoreThan100(){
+		String stmt = "select p from Product p where p.id IN ( "
+		+"select pp.id from Product pp join pp.historyPrice hp "
+		+"where (p.id, hp.startDate) IN ( "
+		+"select hpp.product.id, min(hpp.startDate) from HistoryPrice hpp "
+		+"group by (hpp.product.id) )"
+		+"and (p.price / 2) > hp.price)";
+		
+		Session session = sessionFactory.getCurrentSession();
+								   
+		Query<Product> query = session.createQuery(stmt, Product.class);
+		List<Product> results = query.getResultList();
+		return results;
+	}
 	
+	public Supplier getSupplierLessExpensiveProduct() {
+		String stmt = "select s from Product p join p.historyPrice h "
+		+"join p.supplier s "
+		+"order by h.price";
+		
+		Session session = sessionFactory.getCurrentSession();
+								   
+		Query<Supplier> query = session.createQuery(stmt, Supplier.class);
+		query.setMaxResults(1);
+		return query.getSingleResult();
+		
+	}
+	
+	public List<Supplier> getSuppliersDoNotSellOn(Date day){
+		String stmt = "select s from Supplier s where s NOT IN (select Distinct(po.product.supplier) from Order o join o.productOrders po "
+				+"join o.actualState acstate "
+				+"where o.dateOfOrder=:day and acstate.status!='Pending')";
+				
+		Session session = sessionFactory.getCurrentSession();
+										   
+		Query<Supplier> query = session.createQuery(stmt, Supplier.class);
+		query.setParameter("day", day);
+		List<Supplier> results = query.getResultList();
+		return results;
+	}
+	
+	public List<Product> getSoldProductsOn(Date day){
+		String stmt = "select po.product from Order o join o.productOrders po "
+		+"join o.actualState acstate "
+		+"where o.dateOfOrder=:day and acstate.status!='Pending'";	
+		
+		Session session = sessionFactory.getCurrentSession();							   
+		Query<Product> query = session.createQuery(stmt, Product.class);
+		query.setParameter("day", day);
+		List<Product> results = query.getResultList();
+		return results;
+	}
+	
+	public List<Order> getOrdersCompleteMorethanOneDay(){
+		String stmt = "select distinct(o) from Order o join o.collectionOrderStatus cos "
+		+"join o.collectionOrderStatus coss "
+		+"where (cos.status='Pending' and coss.status='Delivered') "
+		+"and ((DATE(coss.startDate) - DATE(cos.startDate))>=1)";
+						
+		Session session = sessionFactory.getCurrentSession();
+						   
+		Query<Order> query = session.createQuery(stmt, Order.class);
+						
+		List<Order> results = query.getResultList();
+		return results;
+	}
+	
+	public List<Product> getProductsNotSold(){
+		String stmt = "select p from Product p where p not in"
+		+"(select po.product from Order o join o.productOrders po join o.actualState acstate "
+		+"where acstate.status!='Pending')";	
+						
+		Session session = sessionFactory.getCurrentSession();							   
+		Query<Product> query = session.createQuery(stmt, Product.class);
+				
+		List<Product> results = query.getResultList();
+		return results;
+	}
 }
