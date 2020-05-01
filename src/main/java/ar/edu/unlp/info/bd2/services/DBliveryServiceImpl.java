@@ -264,8 +264,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<User> getUsersSpendingMoreThan(Float amount) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getUsersSpendingMoreThan(amount);
 	}
 
 	@Override

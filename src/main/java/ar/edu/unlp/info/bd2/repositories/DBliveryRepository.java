@@ -356,4 +356,16 @@ public class DBliveryRepository {
 		List<Product> results = query.getResultList();
 		return results;
 	}
+
+	public List<User> getUsersSpendingMoreThan(Float amount) {
+		String stmt = "select u from Order o INNER JOIN User u "
+				+"on (o.client = u.id) "
+				+"where o.totalPrice > :amount ";	
+								
+				Session session = sessionFactory.getCurrentSession();							   
+				Query<User> query = session.createQuery(stmt, User.class);
+				query.setParameter("amount", amount);
+				List<User> results = query.getResultList();
+				return results;
+	}
 }
