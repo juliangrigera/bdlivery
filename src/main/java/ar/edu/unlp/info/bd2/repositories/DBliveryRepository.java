@@ -129,13 +129,11 @@ public class DBliveryRepository {
 	
 	public List<Supplier> getTopNSuppliersInSentOrders(int n){
 		String stmt = ("SELECT s from Order o "
-		+"join o.actualState estado "
 		+"join o.productOrders po "
 		+"join po.product p "
 		+"join p.supplier s "
-		+"where estado.status='Sent' or estado.status='Pending' "
 		+"group by s.id "
-		+"order by count(s) desc");
+		+"order by count(*) desc");
 		Session session = sessionFactory.getCurrentSession();
 		   
 		Query<Supplier> query = session.createQuery(stmt, Supplier.class);
@@ -173,7 +171,10 @@ public class DBliveryRepository {
 	}
 
 	public Product getBestSellingProduct() {
-		String stmt = "SELECT p FROM Order o join o.productOrders po join po.product p group by p order by count(p) desc";
+		String stmt = "SELECT p FROM ProductOrder po "
+		+"join po.product p "
+		+"group by p "
+		+"order by count(po.quantity) desc";
 		Session session = sessionFactory.getCurrentSession();
 		   
 		Query<Product> query = session.createQuery(stmt, Product.class);
@@ -243,10 +244,10 @@ public class DBliveryRepository {
 	}
 	
 	public List<Order> getDeliveredOrdersSameDay(){
-		String stmt = "select o.ord from OrderStatus o inner join OrderStatus u "
-		+"on(u.ord = o.ord) "
-		+"where o.status='Pending' and u.status='Delivered' "
-		+"and (DATE(u.startDate) = DATE(o.startDate))";
+		String stmt = "select oss from Order o "
+		+"join o.collectionOrderStatus os "
+		+"join os oss "
+		+"where os.status='Pending' and (o.actualState.status='Delivered') and (DATE(o.actualState.startDate) - DATE(os.startDate) ) = 0";
 				
 		Session session = sessionFactory.getCurrentSession();
 				   
@@ -280,14 +281,16 @@ public class DBliveryRepository {
 	}
 	
 	public List<Product> getProductIncreaseMoreThan100(){
-		String stmt = "select p from HistoryPrice hp inner join Product p on(p.id = hp.product) where hp.product in (SELECT hp2.product from HistoryPrice hp2 where hp.price*2 <= hp2.price)";
-//		String stmt = "select p from Product p where p.id IN ( "
-//		+"select pp.id from Product pp join pp.historyPrice hp "
-//		+"where (p.id, hp.startDate) IN ( "
-//		+"select hpp.product.id, min(hpp.startDate) from HistoryPrice hpp "
-//		+"group by (hpp.product.id) )"
-//		+"and (p.price / 2) > hp.price)";
-//		
+		String stmt = "SELECT DISTINCT prod "
+				+ "FROM Product prod "
+				+ "JOIN prod.historyPrice pric "
+				+ "WHERE pric.price * 2 <= "
+				+ "(SELECT MAX(pri.price) "
+				+ "FROM Product p "
+				+ "JOIN p.historyPrice pri "
+				+ "GROUP BY p "
+				+ "HAVING p = prod)";
+
 		Session session = sessionFactory.getCurrentSession();
 								   
 		Query<Product> query = session.createQuery(stmt, Product.class);
@@ -296,12 +299,16 @@ public class DBliveryRepository {
 	}
 	
 	public Supplier getSupplierLessExpensiveProduct() {
-		String stmt = "select s from Product p join p.supplier s order by p.price";
+		String stmt = "select s from Product p join p.supplier s "
+		+"join p.historyPrice hp "
+		+"where hp.price = (select min(hpp.price) from HistoryPrice hpp)";
 		
 		Session session = sessionFactory.getCurrentSession();
 								   
 		Query<Supplier> query = session.createQuery(stmt, Supplier.class);
-		query.setMaxResults(1);
+		//List<Supplier> results = query.getResultList();
+		
+		
 		return query.getSingleResult();
 		
 	}
@@ -309,7 +316,7 @@ public class DBliveryRepository {
 	public List<Supplier> getSuppliersDoNotSellOn(Date day){
 		String stmt = "select s from Supplier s where s NOT IN (select Distinct(po.product.supplier) from Order o join o.productOrders po "
 				+"join o.actualState acstate "
-				+"where o.dateOfOrder=:day and acstate.status!='Pending')";
+				+"where o.dateOfOrder=:day)";
 				
 		Session session = sessionFactory.getCurrentSession();
 										   
@@ -321,8 +328,7 @@ public class DBliveryRepository {
 	
 	public List<Product> getSoldProductsOn(Date day){
 		String stmt = "select po.product from Order o join o.productOrders po "
-		+"join o.actualState acstate "
-		+"where o.dateOfOrder=:day and acstate.status!='Pending'";	
+		+"where o.dateOfOrder=:day";	
 		
 		Session session = sessionFactory.getCurrentSession();							   
 		Query<Product> query = session.createQuery(stmt, Product.class);
@@ -347,8 +353,7 @@ public class DBliveryRepository {
 	
 	public List<Product> getProductsNotSold(){
 		String stmt = "select p from Product p where p not in"
-		+"(select po.product from Order o join o.productOrders po join o.actualState acstate "
-		+"where acstate.status!='Pending')";	
+		+"(select po.product from Order o join o.productOrders po)";	
 						
 		Session session = sessionFactory.getCurrentSession();							   
 		Query<Product> query = session.createQuery(stmt, Product.class);
@@ -356,16 +361,31 @@ public class DBliveryRepository {
 		List<Product> results = query.getResultList();
 		return results;
 	}
-
-	public List<User> getUsersSpendingMoreThan(Float amount) {
-		String stmt = "select u from Order o INNER JOIN User u "
-				+"on (o.client = u.id) "
-				+"where o.totalPrice > :amount ";	
+	
+	public List<Order> getOrderWithMoreQuantityOfProducts(Date day){
+		String stmt = "SELECT o FROM Order o JOIN o.productOrders p WHERE o.dateOfOrder = :day GROUP BY o ORDER BY sum(p.quantity) DESC";
 								
-				Session session = sessionFactory.getCurrentSession();							   
-				Query<User> query = session.createQuery(stmt, User.class);
-				query.setParameter("amount", amount);
-				List<User> results = query.getResultList();
-				return results;
+		Session session = sessionFactory.getCurrentSession();
+								   
+		Query<Order> query = session.createQuery(stmt, Order.class);
+		query.setParameter("day", day);
+		query.setFirstResult(0).setMaxResults(1);
+		List<Order> results = query.getResultList();
+		return results;
 	}
+	
+	public List<Object[]> getProductsWithPriceAt(Date day){
+		String stmt = "SELECT p, pr.price FROM Product p JOIN p.historyPrice pr WHERE :day BETWEEN pr.startDate AND pr.endDate";
+		
+		Session session = sessionFactory.getCurrentSession();
+								   
+		Query query = session.createQuery(stmt);
+		query.setParameter("day", day);
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();	
+		return results;
+	}
+	
+	
 }
