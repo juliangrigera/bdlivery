@@ -49,11 +49,7 @@ public class ProductOrder {
 	public Product getProduct() {
 		return product;
 	}
-	
-	public Float getAmount() {
-	 return (this.getProduct().getPrice() * this.getQuantity());
-	}
-	
+
 	public void setProduct(Product product) {
 		this.product = product;
 	}

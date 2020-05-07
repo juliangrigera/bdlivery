@@ -15,7 +15,7 @@ public class Product {
 	
 	public Product() {}
 	
-	public Product(String name, Float weigth, Float price, Supplier supplier) {
+	public Product(String name, Float price, Float weigth, Supplier supplier) {
 		this.name = name;
 		this.weigth = weigth;
 		this.supplier = supplier;
@@ -25,12 +25,13 @@ public class Product {
 		
 	}
 	
-	public Product(String name, Float weigth, Float price, Supplier supplier, Date actualDate) {
+	public Product(String name, Float price, Float weigth, Supplier supplier, Date actualDate) {
 		this.name = name;
 		this.weigth = weigth;
 		this.supplier = supplier;
 		this.historyPrice = new ArrayList<>();
 		Date date = actualDate;
+		this.price = null;
 		this.addPrice(price, date);
 	}
 
@@ -48,7 +49,7 @@ public class Product {
 	@Column(name="price", nullable=false)
 	private Float price;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@OrderBy("startDate")
 	@JoinColumn(name = "productId")
 	private List<HistoryPrice> historyPrice = new ArrayList<>();
@@ -82,7 +83,7 @@ public class Product {
 	}
 	
 	public void addPrice(Float price, Date date) {
-		if(this.historyPrice.size() >= 1) {
+		if(this.price != null) {
 			HistoryPrice lastPrice = this.historyPrice.get(this.historyPrice.size()-1);
 			lastPrice.setEndDate(date);
 		}

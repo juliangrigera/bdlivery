@@ -264,7 +264,8 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<User> getUsersSpendingMoreThan(Float amount) {
-		return repository.getUsersSpendingMoreThan(amount);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -363,8 +364,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Object[]> getProductsWithPriceAt(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getProductsWithPriceAt(day);
 	}
 
 	@Override
@@ -374,8 +374,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Order> getOrderWithMoreQuantityOfProducts(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getOrderWithMoreQuantityOfProducts(day);
 	}
 	
 	@Override

@@ -5,6 +5,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "orders")
@@ -20,15 +22,15 @@ public class Order {
 	
 	@Column(name="address")
 	private String address;
-
-	@Column(name="totalPrice")
-	private Float totalPrice;
 	
 	@Column(name="coordX")
 	private Float coordX;
 	
 	@Column(name="coordY")
 	private Float coordY;
+	
+	@Column(nullable=false)
+	private Float amount;
 	
 	@OneToOne()
 	@JoinColumn(name = "clientId")
@@ -61,10 +63,10 @@ public class Order {
 		this.address = address;
 		this.coordX = coordX;
 		this.coordY = coordY;
+		this.amount = 0F;
 		this.client = client;
 		
 		this.deliveryUser = null;
-		this.totalPrice = (float) 0;
 		this.actualState = new OrderStatus("Pending", this, dateOfOrder); //NUEVO! NO LO TENIAMOS EN CUENTA!
 		this.productOrders = new ArrayList<>();
 		this.collectionOrderStatus = new ArrayList<>();
@@ -146,7 +148,6 @@ public class Order {
 	
 	public void addProductOrder(ProductOrder po) {
 		this.productOrders.add(po);
-		this.addPrice();
 	}
 	
 	public List<OrderStatus> getStatus() { //Diferente al set por como esta en DBliveryServiceTestCase
@@ -187,22 +188,10 @@ public class Order {
 		
 	}
 	
-	public void addPrice() {
-		for (int i = 0; i < this.productOrders.size(); i++) {
-			this.totalPrice = this.totalPrice + this.productOrders.get(i).getAmount();
-	    }
-	}
-	
 	public Float getAmount() {
-		Float amount = (float) 0;
-		for (int i = 0; i < this.productOrders.size(); i++) {
-			amount = amount + this.productOrders.get(i).getAmount();
-	    }
-		return amount;
-	}
-
-	public Float getTotalPrice() {
-		return totalPrice;
+		
+		Float f = (float) 1;
+		return f;
 	}
 	
 	/*--------------------------------------------------*/
