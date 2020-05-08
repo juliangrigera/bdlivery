@@ -2,12 +2,15 @@ package ar.edu.unlp.info.bd2.model;
 
 import javax.persistence.*;
 
+import ar.edu.unlp.info.bd2.repositories.DBliveryException;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name="product")
@@ -31,7 +34,6 @@ public class Product {
 		this.supplier = supplier;
 		this.historyPrice = new ArrayList<>();
 		Date date = actualDate;
-		this.price = null;
 		this.addPrice(price, date);
 	}
 
@@ -76,6 +78,16 @@ public class Product {
 
 	public Float getPrice() {
 		return price;
+	}
+	
+	public Float getPriceAt(Date day) {
+		Float pricesAt=0F;
+		for (int i = 0; i< this.getPrices().size(); i++) {
+			if(this.getPrices().get(i).getStartDate().before(day)) {
+				pricesAt=this.getPrices().get(i).getPrice();
+			}
+		}
+		return pricesAt;
 	}
 
 	public void setPrice(Float price) {

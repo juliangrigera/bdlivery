@@ -39,7 +39,6 @@ public class DBliveryRepository {
 	}
 
 	public Product storeProduct(Product p) {
-		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().save(p);
 		return p;
 	}
@@ -384,6 +383,16 @@ public class DBliveryRepository {
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();	
+		return results;
+	}
+
+	public List<User> getUsersSpendingMoreThan(Float amount) {
+    	String stmt = "SELECT u FROM Order o INNER JOIN User u ON(u.id=o.client) WHERE o.amount > :amount";
+    	Session session = sessionFactory.getCurrentSession();							   
+		Query<User> query = session.createQuery(stmt, User.class);
+		query.setParameter("amount", amount);
+
+		List<User> results = query.getResultList();
 		return results;
 	}
 	

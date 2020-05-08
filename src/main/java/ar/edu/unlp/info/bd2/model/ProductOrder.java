@@ -39,7 +39,7 @@ public class ProductOrder {
 	}
 
 	public Long getQuantity() {
-		return quantity;
+		return this.quantity;
 	}
 
 	public void setQuantity(Long quantity) {
@@ -47,7 +47,7 @@ public class ProductOrder {
 	}
 
 	public Product getProduct() {
-		return product;
+		return this.product;
 	}
 
 	public void setProduct(Product product) {

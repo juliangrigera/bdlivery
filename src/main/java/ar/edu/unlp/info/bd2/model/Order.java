@@ -29,7 +29,7 @@ public class Order {
 	@Column(name="coordY")
 	private Float coordY;
 	
-	@Column(nullable=false)
+	@Column(name="amount")
 	private Float amount;
 	
 	@OneToOne()
@@ -63,7 +63,7 @@ public class Order {
 		this.address = address;
 		this.coordX = coordX;
 		this.coordY = coordY;
-		this.amount = 0F;
+		this.amount = (float) 0;
 		this.client = client;
 		
 		this.deliveryUser = null;
@@ -144,10 +144,23 @@ public class Order {
 
 	public void setProductOrders(List<ProductOrder> productOrders) {
 		this.productOrders = productOrders;
+		for(int i= 0; i < productOrders.size(); i++){
+			this.setAmountPO(productOrders.get(i));
+		}
+		
 	}
 	
 	public void addProductOrder(ProductOrder po) {
 		this.productOrders.add(po);
+		this.setAmountPO(po);
+	}
+	
+	public void setAmountPO(ProductOrder po) {
+		Float price=po.getProduct().getPriceAt(getDateOfOrder()) * po.getQuantity();
+		if (price == 0F) {
+			price = po.getProduct().getPrice() * po.getQuantity();
+		}
+		this.amount = this.amount + price;
 	}
 	
 	public List<OrderStatus> getStatus() { //Diferente al set por como esta en DBliveryServiceTestCase
@@ -189,9 +202,7 @@ public class Order {
 	}
 	
 	public Float getAmount() {
-		
-		Float f = (float) 1;
-		return f;
+		return this.amount;
 	}
 	
 	/*--------------------------------------------------*/
