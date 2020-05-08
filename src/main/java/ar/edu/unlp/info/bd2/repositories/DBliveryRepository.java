@@ -243,11 +243,12 @@ public class DBliveryRepository {
 	}
 	
 	public List<Order> getDeliveredOrdersSameDay(){
-		String stmt = "select oss from Order o "
-		+"join o.collectionOrderStatus os "
-		+"join os oss "
-		+"where os.status='Pending' and (o.actualState.status='Delivered') and (DATE(o.actualState.startDate) - DATE(os.startDate) ) = 0";
-				
+//		String stmt = "select o from Order o "
+//		+"join o.collectionOrderStatus os "
+//		+"join os oss "
+//		+"where oss.status='Pending' and (oss.status='Delivered') and (DATE(oss.startDate) - DATE(os.startDate) ) = 0";
+		String stmt = "select orden from OrderStatus o join o.ord orden inner join OrderStatus u on (u.ord = o.ord) where o.status='Pending' and u.status='Delivered' and (DATE(orden.dateOfOrder) = DATE(u.startDate))"; 
+		
 		Session session = sessionFactory.getCurrentSession();
 				   
 		Query<Order> query = session.createQuery(stmt, Order.class);
@@ -368,7 +369,7 @@ public class DBliveryRepository {
 								   
 		Query<Order> query = session.createQuery(stmt, Order.class);
 		query.setParameter("day", day);
-		query.setFirstResult(0).setMaxResults(1);
+		query.setMaxResults(1);
 		List<Order> results = query.getResultList();
 		return results;
 	}
@@ -387,7 +388,7 @@ public class DBliveryRepository {
 	}
 
 	public List<User> getUsersSpendingMoreThan(Float amount) {
-    	String stmt = "SELECT u FROM Order o INNER JOIN User u ON(u.id=o.client) WHERE o.amount > :amount";
+    	String stmt = "SELECT u FROM Order o join o.actualState actState INNER JOIN User u ON(u.id=o.client) WHERE o.amount > :amount and actState.status<>'Pending' ";
     	Session session = sessionFactory.getCurrentSession();							   
 		Query<User> query = session.createQuery(stmt, User.class);
 		query.setParameter("amount", amount);

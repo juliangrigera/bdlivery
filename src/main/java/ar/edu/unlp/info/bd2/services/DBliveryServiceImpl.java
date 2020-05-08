@@ -403,7 +403,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		o.setDeliveryUser(deliveryUser);
 		//OrderStatus sent = new OrderStatus("Sent", date);
 		o.addOrderStatus("Sent", date);
-		
+		o.calcularPrecioTotal();
 		return repository.updateOrder(o);
 	}
 	
@@ -424,6 +424,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		Order o = op.get();
 
 		//OrderStatus cancelled = new OrderStatus("Cancelled", date);
+		o.calcularPrecioTotal();
 		o.addOrderStatus("Cancelled", date);
 		 
 		return repository.updateOrder(o);
@@ -447,7 +448,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 		//OrderStatus delivered = new OrderStatus("Delivered", date);
 		o.addOrderStatus("Delivered", date);
-		 
+		
 		return repository.updateOrder(o);
 	}
 

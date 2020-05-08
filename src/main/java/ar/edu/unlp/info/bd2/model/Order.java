@@ -186,6 +186,7 @@ public class Order {
 		this.actualState = orderStatus;
 		
 		this.collectionOrderStatus.add(orderStatus);
+		
 	}
 	
 	public void addOrderStatus(String status, Date date) {
@@ -203,6 +204,15 @@ public class Order {
 	
 	public Float getAmount() {
 		return this.amount;
+	}
+
+	public Float calcularPrecioTotal() {
+		Float total = 0F;
+		for(int i=0; i < this.productOrders.size(); i++) {
+			total =(float) (total + (this.getProducts().get(i).getProduct().getPriceAt(getDateOfOrder()) ) * ( this.getProducts().get(i).getQuantity()));
+		}
+		return total;
+		
 	}
 	
 	/*--------------------------------------------------*/
