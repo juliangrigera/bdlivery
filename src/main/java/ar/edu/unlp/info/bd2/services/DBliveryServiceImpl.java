@@ -114,7 +114,12 @@ public class DBliveryServiceImpl implements DBliveryService {
 		}
 
 		Order o = op.get();
-		ProductOrder po = new ProductOrder(quantity, product);
+		//traemos el producto de la base
+		Optional<Product> ppe = repository.getProductByid(product.getId());
+		Product este = ppe.get();
+		
+		
+		ProductOrder po = new ProductOrder(quantity, este);
 		o.addProductOrder(po);
 
 		return repository.updateOrder(o);
@@ -258,120 +263,143 @@ public class DBliveryServiceImpl implements DBliveryService {
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getAllOrdersMadeByUser(String username) {
 		return repository.getAllOrdersMadeByUser(username);
 	}
 
 	@Override
+	@Transactional
 	public List<User> getUsersSpendingMoreThan(Float amount) {
 		return repository.getUsersSpendingMoreThan(amount);
 	}
 
 	@Override
+	@Transactional
 	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
 		return repository.getTopNSuppliersInSentOrders(n);
 	}
 
 	@Override
+	@Transactional
 	public List<Product> getTop10MoreExpensiveProducts() {
 		return repository.getTop10MoreExpensiveProducts();
 	}
 
 	@Override
+	@Transactional
 	public List<User> getTop6UsersMoreOrders() {
 		return repository.getTop6UsersMoreOrders();
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getCancelledOrdersInPeriod(Date startDate, Date endDate) {
 		return repository.getCancelledOrdersInPeriod(startDate, endDate);
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getPendingOrders() {
 		List<Order> o = repository.getPendingOrders();
 		return o;
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getSentOrders() {
 		List<Order> o = repository.getSentOrders();
 		return o;
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
 		return repository.getDeliveredOrdersInPeriod(startDate, endDate);
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getDeliveredOrdersForUser(String username) {
 		List<Order> o = repository.getDeliveredOrdersForUser(username);
 		return o;
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getSentMoreOneHour() {
 		return repository.getSentMoreOneHour();
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getDeliveredOrdersSameDay() {
 		return repository.getDeliveredOrdersSameDay();
 	}
 
 	@Override
+	@Transactional
 	public List<User> get5LessDeliveryUsers() {
 		return repository.get5LessDeliveryUsers();
 	}
 
 	@Override
+	@Transactional
 	public Product getBestSellingProduct() {
 		Product product = repository.getBestSellingProduct();
 		return product;
 	}
 
 	@Override
+	@Transactional
 	public List<Product> getProductsOnePrice() {
 		return repository.getProductsOnePrice();
 	}
 
 	@Override
+	@Transactional
 	public List<Product> getProductIncreaseMoreThan100() {
 		return repository.getProductIncreaseMoreThan100();
 	}
 
 	@Override
+	@Transactional
 	public Supplier getSupplierLessExpensiveProduct() {
 		return repository.getSupplierLessExpensiveProduct();
 	}
 
 	@Override
+	@Transactional
 	public List<Supplier> getSuppliersDoNotSellOn(Date day) {
 		return repository.getSuppliersDoNotSellOn(day);
 	}
 
 	@Override
+	@Transactional
 	public List<Product> getSoldProductsOn(Date day) {
 		return repository.getSoldProductsOn(day);
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getOrdersCompleteMorethanOneDay() {
 		return repository.getOrdersCompleteMorethanOneDay();
 	}
 
 	@Override
+	@Transactional
 	public List<Object[]> getProductsWithPriceAt(Date day) {
 		return repository.getProductsWithPriceAt(day);
 	}
 
 	@Override
+	@Transactional
 	public List<Product> getProductsNotSold() {
 		return repository.getProductsNotSold();
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getOrderWithMoreQuantityOfProducts(Date day) {
 		return repository.getOrderWithMoreQuantityOfProducts(day);
 	}
@@ -403,7 +431,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		o.setDeliveryUser(deliveryUser);
 		//OrderStatus sent = new OrderStatus("Sent", date);
 		o.addOrderStatus("Sent", date);
-		o.calcularPrecioTotal();
+		//o.calcularPrecioTotal();
 		return repository.updateOrder(o);
 	}
 	
@@ -424,7 +452,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		Order o = op.get();
 
 		//OrderStatus cancelled = new OrderStatus("Cancelled", date);
-		o.calcularPrecioTotal();
+		//o.calcularPrecioTotal();
 		o.addOrderStatus("Cancelled", date);
 		 
 		return repository.updateOrder(o);

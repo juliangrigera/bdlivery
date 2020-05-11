@@ -44,8 +44,9 @@ public class Order {
 	@JoinColumn(name = "actualStatusId")
 	private OrderStatus actualState;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "orderId")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ProductOrder> productOrders = new ArrayList<ProductOrder>();
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

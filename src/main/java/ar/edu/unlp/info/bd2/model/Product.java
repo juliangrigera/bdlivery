@@ -51,7 +51,7 @@ public class Product {
 	@Column(name="price", nullable=false)
 	private Float price;
 	
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL)
 	@OrderBy("startDate")
 	@JoinColumn(name = "productId")
 	private List<HistoryPrice> historyPrice = new ArrayList<>();

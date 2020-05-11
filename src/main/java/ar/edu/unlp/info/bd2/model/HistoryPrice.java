@@ -35,7 +35,7 @@ public class HistoryPrice {
 	public HistoryPrice(Float price, Date date, Product product) {
 		this.price = price;
 		this.startDate = date;
-		this.endDate = new Date(92233720368547L);
+		this.endDate = null;
 		this.product = product;
 		
 	}

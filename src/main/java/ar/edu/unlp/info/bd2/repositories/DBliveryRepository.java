@@ -375,7 +375,8 @@ public class DBliveryRepository {
 	}
 	
 	public List<Object[]> getProductsWithPriceAt(Date day){
-		String stmt = "SELECT p, pr.price FROM Product p JOIN p.historyPrice pr WHERE :day BETWEEN pr.startDate AND pr.endDate";
+		String stmt = "SELECT p, pr.price FROM Product p JOIN p.historyPrice pr WHERE pr.startDate<=:day and "
+		+"((pr.endDate>=:day) or (pr.endDate=null))";
 		
 		Session session = sessionFactory.getCurrentSession();
 								   
