@@ -128,11 +128,13 @@ public class DBliveryRepository {
 	
 	public List<Supplier> getTopNSuppliersInSentOrders(int n){
 		String stmt = ("SELECT s from Order o "
+		+"join o.actualState os "
 		+"join o.productOrders po "
 		+"join po.product p "
 		+"join p.supplier s "
+		+"where os.status='Sent' "
 		+"group by s.id "
-		+"order by count(*) desc");
+		+"order by sum(po.quantity) desc");		
 		Session session = sessionFactory.getCurrentSession();
 		   
 		Query<Supplier> query = session.createQuery(stmt, Supplier.class);
@@ -173,7 +175,7 @@ public class DBliveryRepository {
 		String stmt = "SELECT p FROM ProductOrder po "
 		+"join po.product p "
 		+"group by p "
-		+"order by count(po.quantity) desc";
+		+"order by sum(po.quantity) desc";
 		Session session = sessionFactory.getCurrentSession();
 		   
 		Query<Product> query = session.createQuery(stmt, Product.class);
@@ -363,13 +365,20 @@ public class DBliveryRepository {
 	}
 	
 	public List<Order> getOrderWithMoreQuantityOfProducts(Date day){
-		String stmt = "SELECT o FROM Order o JOIN o.productOrders p WHERE o.dateOfOrder = :day GROUP BY o ORDER BY sum(p.quantity) DESC";
+		String stmt = "select o from Order o join o.productOrders po "
+		+"where DATE(o.dateOfOrder)=:day "
+		+"group by o.id "
+		+"having not exists ("
+		+"select oo from Order oo join oo.productOrders popo "
+		+"where DATE(oo.dateOfOrder)=:day "
+		+"group by oo.id "
+		+"having sum(popo.quantity) > sum(po.quantity))";
 								
 		Session session = sessionFactory.getCurrentSession();
 								   
 		Query<Order> query = session.createQuery(stmt, Order.class);
 		query.setParameter("day", day);
-		query.setMaxResults(1);
+		
 		List<Order> results = query.getResultList();
 		return results;
 	}
