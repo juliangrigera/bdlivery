@@ -35,7 +35,11 @@ public class DBliveryMongoTestCase {
 
     @BeforeEach
     public void setUp() {
-        this.client.getDatabase("dblivery").drop();
+        this.client.getDatabase("bd2_grupo" + this.getGroupNumber()).drop();
+    }
+
+    private Integer getGroupNumber() {
+        return 0;
     }
 
     @Test

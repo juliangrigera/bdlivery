@@ -27,8 +27,10 @@ public class DBliveryMongoRepository {
     }
 
     public MongoDatabase getDb() {
-        return this.client.getDatabase("dblivery");
+        return this.client.getDatabase("bd2_grupo" + this.getGroupNumber() );
     }
+
+    private Integer getGroupNumber() { return 0; }
 
     public <T extends PersistentObject> List<T> getAssociatedObjects(
             PersistentObject source, Class<T> objectClass, String association, String destCollection) {
