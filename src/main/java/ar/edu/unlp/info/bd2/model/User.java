@@ -1,7 +1,5 @@
 package ar.edu.unlp.info.bd2.model;
 
-import javax.persistence.*; //Utilizo la persistencia de JPA no hibernate...
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

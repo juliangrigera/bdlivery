@@ -1,10 +1,6 @@
 package ar.edu.unlp.info.bd2.model;
 
-import javax.persistence.*;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonId;
