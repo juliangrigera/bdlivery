@@ -13,7 +13,7 @@ import java.util.Optional;
 public class DBliveryServiceImpl implements  DBliveryService {
     private DBliveryMongoRepository repository;
 
-    DBliveryServiceImpl(DBliveryMongoRepository repository) {
+    public DBliveryServiceImpl(DBliveryMongoRepository repository) {
         super();
         this.repository = repository;
     }

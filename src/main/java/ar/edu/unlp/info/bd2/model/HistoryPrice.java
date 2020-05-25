@@ -87,14 +87,22 @@ public class HistoryPrice implements PersistentObject{
         this.product = product;
     }
 
-
-    @java.lang.Override
+    @Override
     public ObjectId getObjectId() {
-        return this.objectId;
+        return objectId;
     }
 
-    @java.lang.Override
+    @Override
     public void setObjectId(ObjectId objectId) {
-        this.objectId = objectId;
+        objectId = objectId;
+
+    }
+
+    public ObjectId getId(){
+        return objectId;
+    }
+
+    public void setId(ObjectId objectId){
+        objectId = objectId;
     }
 }

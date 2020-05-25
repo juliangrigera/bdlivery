@@ -93,11 +93,23 @@ public class Supplier implements PersistentObject {
         this.coordY = coordY;
     }
 
-    public ObjectId getObjectId() {
-        return this.objectId;
+    public ObjectId getId() {
+        return objectId;
     }
 
-    public void setObjectId(ObjectId objectId) {
-        this.objectId = objectId;
+    public void setId(ObjectId objectId) {
+        objectId = objectId;
     }
+
+    @Override
+    public ObjectId getObjectId() {
+        return objectId;
+    }
+
+    @Override
+    public void setObjectId(ObjectId objectId) {
+        objectId = objectId;
+
+    }
+
 }

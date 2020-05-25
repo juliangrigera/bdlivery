@@ -48,7 +48,7 @@ public class Order implements PersistentObject{
         this.address = address;
         this.coordX = coordX;
         this.coordY = coordY;
-        this.amount = (Float) 0;
+        this.amount = 0F;
         this.client = client;
 
         this.deliveryUser = null;
@@ -57,14 +57,6 @@ public class Order implements PersistentObject{
         this.collectionOrderStatus = new ArrayList<>();
         this.addOrderStatus(this.actualState); // q te parece??
 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Date getDateOfOrder() {
@@ -200,14 +192,23 @@ public class Order implements PersistentObject{
 
     }
 
+    @Override
     public ObjectId getObjectId() {
-        return this.objectId;
+        return objectId;
     }
 
+    @Override
     public void setObjectId(ObjectId objectId) {
-        this.objectId = objectId;
+        objectId = objectId;
 
     }
 
+    public ObjectId getId(){
+        return objectId;
+    }
+
+    public void setId(ObjectId objectId){
+        objectId = objectId;
+    }
 
 }

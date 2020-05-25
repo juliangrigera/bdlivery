@@ -98,7 +98,7 @@ public class DBliveryMongoTestCase {
         Order ord = o3.get();
         assertNotNull(ord.getObjectId());
         assertEquals(1,ord.getStatus().size());
-        assertEquals(u1.getObjectId(),ord.getClient().getObjectId());
+        assertEquals(u1.getObjectId(),((User) ord.getClient()).getObjectId());
         assertEquals(1,ord.getProducts().size());
     }
 

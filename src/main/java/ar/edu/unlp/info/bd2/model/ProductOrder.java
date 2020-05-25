@@ -47,12 +47,22 @@ public class ProductOrder implements PersistentObject {
         this.product = product;
     }
 
+    @Override
     public ObjectId getObjectId() {
-        return this.objectId;
+        return objectId;
     }
 
+    @Override
     public void setObjectId(ObjectId objectId) {
-        this.objectId = objectId;
+        objectId = objectId;
 
+    }
+
+    public ObjectId getId(){
+        return objectId;
+    }
+
+    public void setId(ObjectId objectId){
+        objectId = objectId;
     }
 }

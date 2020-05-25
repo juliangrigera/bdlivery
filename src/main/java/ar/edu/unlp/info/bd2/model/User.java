@@ -88,12 +88,22 @@ public class User implements PersistentObject {
         this.dateOfBirth = dateOfBirth;
     }
 
-
+    @Override
     public ObjectId getObjectId() {
         return objectId;
     }
 
+    @Override
     public void setObjectId(ObjectId objectId) {
-        this.objectId = objectId;
+        objectId = objectId;
+
+    }
+
+    public ObjectId getId(){
+        return objectId;
+    }
+
+    public void setId(ObjectId objectId){
+        objectId = objectId;
     }
 }
