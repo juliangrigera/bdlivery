@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
     @Bean
     public DBliveryService createService() {
-        DBliveryMongoRepository repository = this.createRepository();
+        DBliveryMongoRepository repository;
+        repository = this.createRepository();
         return new DBliveryServiceImpl(repository);
     }
 

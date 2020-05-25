@@ -90,12 +90,12 @@ public class User implements PersistentObject {
 
     @Override
     public ObjectId getObjectId() {
-        return objectId;
+        return this.objectId;
     }
 
     @Override
     public void setObjectId(ObjectId objectId) {
-        objectId = objectId;
+        this.objectId = objectId;
 
     }
 
