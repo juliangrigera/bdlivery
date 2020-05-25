@@ -48,5 +48,8 @@ public class DBliveryMongoRepository {
         return stream.collect(Collectors.toList());
     }
 
+    public void insertInto(String collectionName, Class collectionClass, Object object) {
+        this.getDb().getCollection(collectionName, collectionClass).insertOne(object);
+    }
 
 }

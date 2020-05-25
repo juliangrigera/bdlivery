@@ -5,7 +5,9 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="bd2-2020" />
+        </datasource-mapping>
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -51,5 +53,7 @@
     <orderEntry type="library" name="Maven: org.mongodb:mongodb-driver-sync:3.10.1" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:bson:3.10.1" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongodb-driver-core:3.10.1" level="project" />
+    <orderEntry type="library" name="J2EE 1.4-J2EE 1.4" level="project" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
   </component>
 </module>
