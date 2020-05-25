@@ -38,6 +38,7 @@ public class MongoDBConfiguration {
     }
 
     private Integer getGroupNumber() {
-        return 0;
+        Integer x = 3;
+        return x;
     }
 }
