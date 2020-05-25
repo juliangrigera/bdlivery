@@ -98,10 +98,10 @@ public class User implements PersistentObject {
     }
 
     public ObjectId getId(){
-        return objectId;
+        return this.objectId;
     }
 
     public void setId(ObjectId objectId){
-        objectId = objectId;
+        this.objectId = objectId;
     }
 }

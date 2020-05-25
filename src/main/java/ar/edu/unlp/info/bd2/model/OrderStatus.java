@@ -65,20 +65,20 @@ public class OrderStatus implements PersistentObject {
 
     @Override
     public ObjectId getObjectId() {
-        return objectId;
+        return this.objectId;
     }
 
     @Override
     public void setObjectId(ObjectId objectId) {
-        objectId = objectId;
+        this.objectId = objectId;
 
     }
 
     public ObjectId getId(){
-        return objectId;
+        return this.objectId;
     }
 
     public void setId(ObjectId objectId){
-        objectId = objectId;
+        this.objectId = objectId;
     }
 }

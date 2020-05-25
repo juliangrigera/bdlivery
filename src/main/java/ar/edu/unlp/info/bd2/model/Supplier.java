@@ -85,21 +85,21 @@ public class Supplier implements PersistentObject {
     }
 
     public ObjectId getId() {
-        return objectId;
+        return this.objectId;
     }
 
     public void setId(ObjectId objectId) {
-        objectId = objectId;
+        objectId = this.objectId;
     }
 
     @Override
     public ObjectId getObjectId() {
-        return objectId;
+        return this.objectId;
     }
 
     @Override
     public void setObjectId(ObjectId objectId) {
-        objectId = objectId;
+        this.objectId = objectId;
 
     }
 

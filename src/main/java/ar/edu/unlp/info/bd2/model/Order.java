@@ -198,16 +198,16 @@ public class Order implements PersistentObject{
 
     @Override
     public void setObjectId(ObjectId objectId) {
-        objectId = objectId;
+        this.objectId = objectId;
 
     }
 
     public ObjectId getId(){
-        return objectId;
+        return this.objectId;
     }
 
     public void setId(ObjectId objectId){
-        objectId = objectId;
+        this.objectId = objectId;
     }
 
 }
