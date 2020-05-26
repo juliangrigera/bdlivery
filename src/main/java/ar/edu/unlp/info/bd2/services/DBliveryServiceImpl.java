@@ -26,12 +26,16 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public Product createProduct(String name, Float price, Float weight, Supplier supplier, Date date) {
-        return null;
+        Product product = new Product(name, price, weight, supplier, date);
+        repository.insertInto("product", Product.class, product);
+        return product;
     }
 
     @Override
     public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
-        return null;
+        Supplier supplier = new Supplier(name, cuil, address, coordX, coordY);
+        repository.insertInto("supplier", Supplier.class, supplier);
+        return supplier;
     }
 
     @Override
