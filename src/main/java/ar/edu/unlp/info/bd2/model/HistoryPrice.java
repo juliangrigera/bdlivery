@@ -8,7 +8,7 @@ import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-@BsonDiscriminator
+
 public class HistoryPrice implements PersistentObject{
 
     public HistoryPrice() {}

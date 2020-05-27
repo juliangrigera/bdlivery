@@ -1,6 +1,4 @@
 package ar.edu.unlp.info.bd2.model;
-
-
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
@@ -8,7 +6,7 @@ import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-@BsonDiscriminator
+
 public class Supplier implements PersistentObject {
 
     @BsonId

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@BsonDiscriminator
+
 public class Order implements PersistentObject{
 
     @BsonId
@@ -31,8 +31,9 @@ public class Order implements PersistentObject{
     private User deliveryUser;
 
     private OrderStatus actualState;
-
-    private List<ProductOrder> productOrders = new ArrayList<ProductOrder>();
+    
+    
+    private List<ProductOrder> productOrders = new ArrayList<ProductOrder>(); 
 
     @BsonIgnore
     private List<OrderStatus> collectionOrderStatus = new ArrayList<OrderStatus>();
