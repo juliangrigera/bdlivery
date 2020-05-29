@@ -66,6 +66,11 @@ public class DBliveryMongoRepository {
     	return Optional.ofNullable(collec.find(eq(field, parameter) ).first() );
     }
     
+    public Optional getOrderById(String field, Object parameter) {
+    	MongoCollection collec = this.getDb().getCollection("order", Order.class);
+    	return Optional.ofNullable(collec.find(eq(field, parameter) ).first() );
+    }
+    
     public void saveAssociation(Object obj, String string) {
     	this.getDb().getCollection(string, Association.class).insertOne((Association) obj);
     }
@@ -79,6 +84,12 @@ public class DBliveryMongoRepository {
     	MongoCollection collec = this.getDb().getCollection("product", Product.class);
     	
     	collec.replaceOne( eq(field, parameter),  prod); //No quiero actualizar un atributo sino remplazar el objeto ya modificado
+    }
+    
+    public void updateOrder(String field, Object parameter, Order o) {
+    	MongoCollection collec = this.getDb().getCollection("order", Order.class);
+    	
+    	collec.replaceOne( eq(field, parameter),  o);
     }
 
 }

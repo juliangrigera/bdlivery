@@ -21,6 +21,7 @@ public class OrderStatus implements PersistentObject {
 
     private Date endDate;
 
+    @BsonIgnore
     private Order ord;
 
     public OrderStatus() {}

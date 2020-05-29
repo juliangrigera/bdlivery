@@ -32,12 +32,9 @@ public class Order implements PersistentObject{
 
     private OrderStatus actualState;
     
-    
     private List<ProductOrder> productOrders = new ArrayList<ProductOrder>(); 
 
-    @BsonIgnore
     private List<OrderStatus> collectionOrderStatus = new ArrayList<OrderStatus>();
-
 
     /*--------------------------------------------------------------*/
 
@@ -122,17 +119,21 @@ public class Order implements PersistentObject{
     public void setProductOrders(List<ProductOrder> productOrders) {
         this.productOrders = productOrders;
         for(int i= 0; i < productOrders.size(); i++){
-            this.setAmountPO(productOrders.get(i));
+            this.actAmountPO(productOrders.get(i));
         }
 
+    }
+    
+    public List<ProductOrder> getProductOrders() {
+    	return this.productOrders;
     }
 
     public void addProductOrder(ProductOrder po) {
         this.productOrders.add(po);
-        this.setAmountPO(po);
+        this.actAmountPO(po);
     }
 
-    public void setAmountPO(ProductOrder po) {
+    public void actAmountPO(ProductOrder po) {
         Float price=po.getProduct().getPriceAt(getDateOfOrder()) * po.getQuantity();
         if (price == 0F) {
             price = po.getProduct().getPrice() * po.getQuantity();
@@ -146,6 +147,10 @@ public class Order implements PersistentObject{
 
     public void setCollectionOrderStatus(List<OrderStatus> collectionOrderStatus) {
         this.collectionOrderStatus = collectionOrderStatus;
+    }
+    
+    public List<OrderStatus> getCollectionOrderStatus(){
+    	return this.collectionOrderStatus;
     }
 
     public void addOrderStatus(OrderStatus orderStatus) {
@@ -181,6 +186,10 @@ public class Order implements PersistentObject{
 
     public Float getAmount() {
         return this.amount;
+    }
+    
+    public void setAmount(Float amount) {
+    	this.amount = amount;
     }
 
     public Float calcularPrecioTotal() {

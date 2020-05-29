@@ -86,17 +86,39 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public Optional<Order> getOrderById(ObjectId id) {
-        return Optional.empty();
+    	Optional<Order> o = repository.getOrderById("_id", id);
+
+		return o;
     }
 
     @Override
     public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
-        return null;
+    	Order order = new Order(dateOfOrder, address, coordX, coordY, client);
+    	repository.insertInto("order", Order.class, order);
+        return order;
+    	
     }
 
     @Override
     public Order addProduct(ObjectId order, Long quantity, Product product) throws DBliveryException {
-        return null;
+    	Optional<Order> op = this.repository.getOrderById("_id", order);
+
+		if (!op.isPresent() ) {
+			throw new DBliveryException("The order doesnt exists");
+		}
+
+		Order o = op.get();
+		//traemos el producto de la base
+		Optional<Product> ppe = repository.getProductById("_id", product.getObjectId());
+		Product este = ppe.get();
+		
+		ProductOrder po = new ProductOrder(quantity, este);
+		o.addProductOrder(po);
+
+		repository.updateOrder("_id", order, o);
+		
+		return o;
+		
     }
 
     @Override
