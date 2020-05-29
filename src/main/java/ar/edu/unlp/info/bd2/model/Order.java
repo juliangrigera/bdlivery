@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+@BsonDiscriminator
 public class Order implements PersistentObject{
 
     @BsonId
@@ -203,12 +203,5 @@ public class Order implements PersistentObject{
 
     }
 
-    public ObjectId getId(){
-        return this.objectId;
-    }
-
-    public void setId(ObjectId objectId){
-        this.objectId = objectId;
-    }
 
 }

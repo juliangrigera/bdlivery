@@ -11,7 +11,7 @@ import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-
+@BsonDiscriminator
 public class ProductOrder implements PersistentObject {
 
     @BsonId
@@ -57,11 +57,4 @@ public class ProductOrder implements PersistentObject {
 
     }
 
-    public ObjectId getId(){
-        return this.objectId;
-    }
-
-    public void setId(ObjectId objectId){
-        this.objectId = objectId;
-    }
 }

@@ -12,7 +12,7 @@ public class DBInitializer {
 
     @Autowired
     DBliveryService service;
-
+    /*
     public void prepareDB() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -1878,5 +1878,5 @@ public class DBInitializer {
         service.finishOrder(order300.getId(), sdf.parse("8/3/2014"));
 
 
-    }
+    }*/
 }

@@ -4,11 +4,12 @@ import java.util.Date;
 
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-
+@BsonDiscriminator
 public class HistoryPrice implements PersistentObject{
 
     public HistoryPrice() {}
@@ -37,7 +38,8 @@ public class HistoryPrice implements PersistentObject{
     private Date startDate;
 
     private Date endDate;
-
+    
+    @BsonIgnore
     private Product product;
 
     public Float getPrice() {
@@ -83,11 +85,5 @@ public class HistoryPrice implements PersistentObject{
 
     }
 
-    public ObjectId getId(){
-        return this.objectId;
-    }
-
-    public void setId(ObjectId objectId){
-        this.objectId = objectId;
-    }
+  
 }

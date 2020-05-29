@@ -47,9 +47,22 @@ public class DBliveryMongoRepository {
                 StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterable.iterator(), 0), false);
         return stream.collect(Collectors.toList());
     }
-
+    
     public void insertInto(String collectionName, Class collectionClass, Object object) {
         this.getDb().getCollection(collectionName, collectionClass).insertOne(object);
+    }
+    
+    public void insertProduct(Product prod, String string) {
+    	this.getDb().getCollection(string, Product.class).insertOne(prod);
+    }
+    
+    public Optional getUserBy(String field, Object parameter, String nameClass) {
+    	MongoCollection collec = this.getDb().getCollection(nameClass, User.class);
+    	return Optional.ofNullable(collec.find(eq(field, parameter) ).first() );
+    } 
+    
+    public void saveAssociation(Object obj, String string) {
+    	this.getDb().getCollection(string, Association.class).insertOne((Association) obj);
     }
 
 }

@@ -11,7 +11,7 @@ import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-
+@BsonDiscriminator
 public class Product implements PersistentObject{
 
     public Product() {}
@@ -20,7 +20,8 @@ public class Product implements PersistentObject{
         this.name = name;
         this.weight = weight;
         this.supplier = supplier;
-        this.historyPrice = new ArrayList<>();
+        //this.historyPrice = new ArrayList<>();
+        this.historyPrice = new ArrayList<HistoryPrice>();
         Date date = new Date();
         this.addPrice(price, date); //CREO Q ACA NO HACE FALTA MANDAR THIS
     }
@@ -29,7 +30,7 @@ public class Product implements PersistentObject{
         this.name = name;
         this.weight = weight;
         this.supplier = supplier;
-        this.historyPrice = new ArrayList<>();
+        this.historyPrice = new ArrayList<HistoryPrice>();
         Date date = actualDate;
         this.addPrice(price, date);
     }
@@ -43,8 +44,7 @@ public class Product implements PersistentObject{
 
     private Float price;
 
-    @BsonIgnore
-    private List<HistoryPrice> historyPrice = new ArrayList<>();
+    private List<HistoryPrice> historyPrice;
 
     private Supplier supplier;
 
@@ -119,11 +119,4 @@ public class Product implements PersistentObject{
 
     }
 
-    public ObjectId getId(){
-        return this.objectId;
-    }
-
-    public void setId(ObjectId objectId){
-        this.objectId = objectId;
-    }
 }

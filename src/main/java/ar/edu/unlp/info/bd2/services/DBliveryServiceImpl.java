@@ -3,18 +3,20 @@ package ar.edu.unlp.info.bd2.services;
 import ar.edu.unlp.info.bd2.model.*;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 import ar.edu.unlp.info.bd2.repositories.DBliveryMongoRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 
 public class DBliveryServiceImpl implements  DBliveryService {
     private DBliveryMongoRepository repository;
 
     public DBliveryServiceImpl(DBliveryMongoRepository repository) {
-        super();
         this.repository = repository;
     }
 
@@ -22,7 +24,9 @@ public class DBliveryServiceImpl implements  DBliveryService {
     @Override
     public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
     	  Product product = new Product(name, price, weight, supplier);
+    	  //repository.insertProduct(prod, "product");
           repository.insertInto("product", Product.class, product);
+          //return prod;
           return product;
     }
 
@@ -52,17 +56,17 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public Optional<User> getUserById(ObjectId id) {
-        return Optional.empty();
+    	return repository.getUserBy("_id", id, "user");
     }
 
     @Override
     public Optional<User> getUserByEmail(String email) {
-        return Optional.empty();
+    	return repository.getUserBy("email", email, "user");
     }
 
     @Override
     public Optional<User> getUserByUsername(String username) {
-        return Optional.empty();
+        return repository.getUserBy("username", username, "user");
     }
 
     @Override
@@ -134,4 +138,6 @@ public class DBliveryServiceImpl implements  DBliveryService {
     public List<Product> getProductsByName(String name) {
         return null;
     }
+    
+
 }
