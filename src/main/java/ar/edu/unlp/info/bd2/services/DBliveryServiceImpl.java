@@ -152,11 +152,6 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public Order cancelOrder(ObjectId order) throws DBliveryException {
-        return null;
-    }
-
-    @Override
-    public Order cancelOrder(ObjectId order, Date date) throws DBliveryException {
     	Optional<Order> op = this.getOrderById(order);
 
 		if(!op.isPresent() ){
@@ -177,8 +172,29 @@ public class DBliveryServiceImpl implements  DBliveryService {
     }
 
     @Override
+    public Order cancelOrder(ObjectId order, Date date) throws DBliveryException {
+    	return null;
+    }
+
+    @Override
     public Order finishOrder(ObjectId order) throws DBliveryException {
-        return null;
+    	Optional<Order> op = this.getOrderById(order);
+
+		if(!op.isPresent() ){
+			throw new DBliveryException("Order does not exist");
+		}
+
+		if (!this.canFinish(order) ) {
+			throw new DBliveryException("The order can't be delivered");
+		}
+
+		Order o = op.get();
+
+		OrderStatus delivered = new OrderStatus("Delivered");
+		o.addOrderStatus(delivered);
+		 
+		repository.updateOrder("_id", order, o);
+		return o;
     }
 
     @Override
@@ -202,7 +218,16 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public boolean canFinish(ObjectId id) throws DBliveryException {
-        return false;
+    	Optional<Order> o = this.getOrderById(id);
+    	if (o.isPresent()) {
+    		Order o1 = o.get();
+    		if (o1.getActualState().getStatus().equals("Sent") ) {
+    			return true;
+    		}
+    	} else {
+    		throw new DBliveryException("The order doesnt exist");
+    	}
+    	return false;
     }
 
     @Override
