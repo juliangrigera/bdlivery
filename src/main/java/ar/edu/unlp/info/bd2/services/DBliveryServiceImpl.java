@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -136,7 +137,9 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public List<Product> getProductsByName(String name) {
-        return null;
+    	List<Product> listIte = new ArrayList();
+        repository.getProductsBy("name", name, "product").into(listIte); //con into agrego todos los documentos del FindItereble a (en este caso) una lista
+        return listIte;
     }
     
 

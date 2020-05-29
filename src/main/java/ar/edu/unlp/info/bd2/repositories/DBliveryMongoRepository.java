@@ -64,5 +64,10 @@ public class DBliveryMongoRepository {
     public void saveAssociation(Object obj, String string) {
     	this.getDb().getCollection(string, Association.class).insertOne((Association) obj);
     }
+    
+    public FindIterable<Product> getProductsBy(String field, Object parameter,String nameClass) {
+    	MongoCollection<Product> collection = this.getDb().getCollection(nameClass, Product.class);
+        return   collection.find(regex(field, ""+parameter+""));
+    }
 
 }
