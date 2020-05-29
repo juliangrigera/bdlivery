@@ -12,24 +12,6 @@ import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 @BsonDiscriminator
 public class HistoryPrice implements PersistentObject{
 
-    public HistoryPrice() {}
-
-    public HistoryPrice(Float price) {
-        this.setPrice(price);
-        Date date = new Date();
-        this.setStartDate(date);
-        this.setEndDate(null);
-        this.product = null; //contemplando el tp1
-    }
-
-    public HistoryPrice(Float price, Date date, Product product) {
-        this.price = price;
-        this.startDate = date;
-        this.endDate = null;
-        this.product = product;
-
-    }
-
     @BsonId
     private ObjectId objectId;
 
@@ -41,6 +23,25 @@ public class HistoryPrice implements PersistentObject{
     
     @BsonIgnore
     private Product product;
+    
+    public HistoryPrice() {}
+
+    public HistoryPrice(Float price) {
+        this.setPrice(price);
+        Date date = new Date();
+        this.setStartDate(date);
+        this.setEndDate(null);
+        this.product = null; //contemplando el tp1
+    }
+
+    public HistoryPrice(Float price, Date date, Product product) {
+
+        this.price = price;
+        this.startDate = date;
+        this.endDate = null;
+        this.product = product;
+
+    }
 
     public Float getPrice() {
         return price;

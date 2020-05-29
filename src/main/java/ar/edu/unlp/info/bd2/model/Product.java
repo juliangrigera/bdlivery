@@ -89,15 +89,19 @@ public class Product implements PersistentObject{
         }
         this.setPrice(price);
         HistoryPrice hp = new HistoryPrice(price, date, this);
-        this.setHistoryPrice(hp);
+        this.getHistoryPrice().add(hp);
     }
 
     public List<HistoryPrice> getPrices() {
         return historyPrice;
     }
-
-    public void setHistoryPrice(HistoryPrice historyPrice) {
-        this.historyPrice.add(historyPrice);
+    
+    public List<HistoryPrice> getHistoryPrice(){
+    	return historyPrice;
+    }
+    
+    public void setHistoryPrice(List<HistoryPrice> historyPrice) {
+    	this.historyPrice = historyPrice;
     }
 
     public Supplier getSupplier() {
