@@ -123,7 +123,26 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public Order deliverOrder(ObjectId order, User deliveryUser) throws DBliveryException {
-        return null;
+    	Optional<Order> op = this.getOrderById(order);
+
+		if(!op.isPresent() ){
+			throw new DBliveryException("Order does not exist");
+		}
+			
+		if (!this.canDeliver(order)) {
+			throw new DBliveryException("The order can't be delivered");
+		} 
+
+		Order o = op.get();
+
+		o.setDeliveryUser(deliveryUser);
+		OrderStatus sent = new OrderStatus("Sent");
+		o.addOrderStatus(sent); 
+		
+		repository.updateOrder("_id", order, o);
+		
+		return o;
+		
     }
 
     @Override
@@ -138,7 +157,23 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public Order cancelOrder(ObjectId order, Date date) throws DBliveryException {
-        return null;
+    	Optional<Order> op = this.getOrderById(order);
+
+		if(!op.isPresent() ){
+			throw new DBliveryException("Order does not exist");
+		}
+
+		if (!this.canCancel(order) ) {
+			throw new DBliveryException("The order can't be cancelled");
+		}
+
+		Order o = op.get();
+
+		OrderStatus cancelled = new OrderStatus("Cancelled");
+		o.addOrderStatus(cancelled);
+		 
+		repository.updateOrder("_id", order, o);
+		return o;
     }
 
     @Override
@@ -153,7 +188,16 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public boolean canCancel(ObjectId order) throws DBliveryException {
-        return false;
+    	Optional<Order> o = this.getOrderById(order);
+    	if (o.isPresent()) {
+    		Order o1 = o.get();
+    		if(o1.getActualState().getStatus().equals("Pending") ) {
+    			return true;
+    		}
+    	}else {
+    		throw new DBliveryException("The order doesnt exist");
+    	}
+    	return false;
     }
 
     @Override
@@ -163,12 +207,30 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public boolean canDeliver(ObjectId order) throws DBliveryException {
-        return false;
+    	Optional<Order> o = this.getOrderById(order);
+    	if (o.isPresent()) {
+    		Order order1 = o.get();
+    		if (order1.getProducts().size() >= 1) {
+    			if (this.getActualStatus(order).getStatus().equals("Pending") ) {
+    				return true;
+    			} else {
+    				throw new DBliveryException("The order can't be delivered");
+    			}
+    		}
+    	}
+    	return false;
     }
 
     @Override
     public OrderStatus getActualStatus(ObjectId order) {
-        return null;
+    	Optional<Order> o = this.getOrderById(order);
+    	if (!o.isPresent()) {
+    		return null;
+    	}
+    	//La orden existe por lo tanto si o si tiene un estado
+    	Order or = o.get();
+    	OrderStatus os = or.getStatus().get(or.getStatus().size()-1);
+    	return os;
     }
 
     @Override
