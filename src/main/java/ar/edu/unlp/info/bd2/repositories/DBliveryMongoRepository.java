@@ -61,13 +61,24 @@ public class DBliveryMongoRepository {
     	return Optional.ofNullable(collec.find(eq(field, parameter) ).first() );
     } 
     
+    public Optional getProductById(String field, Object parameter) {
+    	MongoCollection collec = this.getDb().getCollection("product", Product.class);
+    	return Optional.ofNullable(collec.find(eq(field, parameter) ).first() );
+    }
+    
     public void saveAssociation(Object obj, String string) {
     	this.getDb().getCollection(string, Association.class).insertOne((Association) obj);
     }
     
-    public FindIterable<Product> getProductsBy(String field, Object parameter,String nameClass) {
+    public FindIterable<Product> getProductsByName(String field, Object parameter,String nameClass) {
     	MongoCollection<Product> collection = this.getDb().getCollection(nameClass, Product.class);
         return   collection.find(regex(field, ""+parameter+""));
+    }
+    
+    public void updateProduct(String field, Object parameter, Product prod) {
+    	MongoCollection collec = this.getDb().getCollection("product", Product.class);
+    	
+    	collec.replaceOne( eq(field, parameter),  prod); //No quiero actualizar un atributo sino remplazar el objeto ya modificado
     }
 
 }

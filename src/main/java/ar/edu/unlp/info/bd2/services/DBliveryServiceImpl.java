@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.text.html.Option;
+
 @Service
 
 public class DBliveryServiceImpl implements  DBliveryService {
@@ -52,7 +54,19 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public Product updateProductPrice(ObjectId id, Float price, Date startDate) throws DBliveryException {
-        return null;
+        Optional<Product> op = repository.getProductById("_id", id);
+        
+        if (!op.isPresent() ) {
+			throw new DBliveryException("The product does not exist");
+		}
+
+		Product prod = op.get();
+		prod.addPrice(price, startDate);
+		
+		repository.updateProduct("_id", id, prod);
+
+		return prod;
+        
     }
 
     @Override
@@ -137,9 +151,9 @@ public class DBliveryServiceImpl implements  DBliveryService {
 
     @Override
     public List<Product> getProductsByName(String name) {
-    	List<Product> listIte = new ArrayList();
-        repository.getProductsBy("name", name, "product").into(listIte); //con into agrego todos los documentos del FindItereble a (en este caso) una lista
-        return listIte;
+    	List<Product> list = new ArrayList();
+        repository.getProductsByName("name", name, "product").into(list); //con into agrego todos los documentos del FindItereble a (en este caso) una lista
+        return list;
     }
     
 
