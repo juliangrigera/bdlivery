@@ -47,6 +47,22 @@ public class DBliveryMongoRepository {
                 StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterable.iterator(), 0), false);
         return stream.collect(Collectors.toList());
     }
+
+    public <T extends PersistentObject> List<T> getObjectsAssociatedWith(
+            ObjectId objectId, Class<T> objectClass, String association, String destCollection) {
+        AggregateIterable<T> iterable =
+                this.getDb()
+                        .getCollection(association, objectClass)
+                        .aggregate(
+                                Arrays.asList(
+                                        match(eq("destination", objectId)),
+                                        lookup(destCollection, "source", "_id", "_matches"),
+                                        unwind("$_matches"),
+                                        replaceRoot("$_matches")));
+        Stream<T> stream =
+                StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterable.iterator(), 0), false);
+        return stream.collect(Collectors.toList());
+    }
     
     public void insertInto(String collectionName, Class collectionClass, Object object) {
         this.getDb().getCollection(collectionName, collectionClass).insertOne(object);
@@ -75,6 +91,7 @@ public class DBliveryMongoRepository {
     	this.getDb().getCollection(string, Association.class).insertOne((Association) obj);
     }
     
+    //ver
     public FindIterable<Product> getProductsByName(String field, Object parameter,String nameClass) {
     	MongoCollection<Product> collection = this.getDb().getCollection(nameClass, Product.class);
         return   collection.find(regex(field, ""+parameter+""));
@@ -90,6 +107,12 @@ public class DBliveryMongoRepository {
     	MongoCollection collec = this.getDb().getCollection("order", Order.class);
     	
     	collec.replaceOne( eq(field, parameter),  o);
+    }
+    
+    //Tambien trabajo con un FindIterable!
+    public FindIterable<Order> getOrderByAtribute(String field, Object parameter) {
+    	MongoCollection<Order> collection = this.getDb().getCollection("order", Order.class);
+    	return collection.find(eq(field, parameter));
     }
 
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.bson.types.ObjectId;
 
+//import ar.edu.unlp.info.bd2.services.DBliveryStatisticsService;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +17,7 @@ import java.util.Optional;
 import javax.swing.text.html.Option;
 
 @Service
-
-public class DBliveryServiceImpl implements  DBliveryService {
+public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatisticsService {
     private DBliveryMongoRepository repository;
 
     public DBliveryServiceImpl(DBliveryMongoRepository repository) {
@@ -31,11 +32,6 @@ public class DBliveryServiceImpl implements  DBliveryService {
           repository.insertInto("product", Product.class, product);
           //return prod;
           return product;
-    }
-
-    @Override
-    public Product createProduct(String name, Float price, Float weight, Supplier supplier, Date date) {
-      return null;
     }
 
     @Override
@@ -146,11 +142,6 @@ public class DBliveryServiceImpl implements  DBliveryService {
     }
 
     @Override
-    public Order deliverOrder(ObjectId order, User deliveryUser, Date date) throws DBliveryException {
-        return null;
-    }
-
-    @Override
     public Order cancelOrder(ObjectId order) throws DBliveryException {
     	Optional<Order> op = this.getOrderById(order);
 
@@ -172,11 +163,6 @@ public class DBliveryServiceImpl implements  DBliveryService {
     }
 
     @Override
-    public Order cancelOrder(ObjectId order, Date date) throws DBliveryException {
-    	return null;
-    }
-
-    @Override
     public Order finishOrder(ObjectId order) throws DBliveryException {
     	Optional<Order> op = this.getOrderById(order);
 
@@ -195,11 +181,6 @@ public class DBliveryServiceImpl implements  DBliveryService {
 		 
 		repository.updateOrder("_id", order, o);
 		return o;
-    }
-
-    @Override
-    public Order finishOrder(ObjectId order, Date date) throws DBliveryException {
-        return null;
     }
 
     @Override
@@ -254,7 +235,9 @@ public class DBliveryServiceImpl implements  DBliveryService {
     	}
     	//La orden existe por lo tanto si o si tiene un estado
     	Order or = o.get();
-    	OrderStatus os = or.getStatus().get(or.getStatus().size()-1);
+    	//OrderStatus os = or.getStatus().get(or.getStatus().size()-1);
+    	
+    	OrderStatus os = or.getActualState();
     	return os;
     }
 
@@ -264,6 +247,154 @@ public class DBliveryServiceImpl implements  DBliveryService {
         repository.getProductsByName("name", name, "product").into(list); //con into agrego todos los documentos del FindItereble a (en este caso) una lista
         return list;
     }
+    
+    @Override
+    public Product createProduct(String name, Float price, Float weight, Supplier supplier, Date date) {
+    	Product product = new Product(name, price, weight, supplier, date);
+  	  
+        repository.insertInto("product", Product.class, product);
+       
+        return product;
+    }
+    
+    @Override
+    public Order finishOrder(ObjectId order, Date date) throws DBliveryException {
+    	Optional<Order> op = this.getOrderById(order);
+
+		if(!op.isPresent() ){
+			throw new DBliveryException("Order does not exist");
+		}
+
+		if (!this.canFinish(order) ) {
+			throw new DBliveryException("The order can't be delivered");
+		}
+
+		Order o = op.get();
+
+		o.addOrderStatus("Delivered", date);
+		 
+		repository.updateOrder("_id", order, o);
+		return o;
+    }
+    
+    @Override
+    public Order cancelOrder(ObjectId order, Date date) throws DBliveryException {
+    	Optional<Order> op = this.getOrderById(order);
+
+		if(!op.isPresent() ){
+			throw new DBliveryException("Order does not exist");
+		}
+
+		if (!this.canCancel(order) ) {
+			throw new DBliveryException("The order can't be cancelled");
+		}
+
+		Order o = op.get();
+
+		o.addOrderStatus("Cancelled", date);
+		 
+		repository.updateOrder("_id", order, o);
+		return o;
+    }
+    
+    @Override
+    public Order deliverOrder(ObjectId order, User deliveryUser, Date date) throws DBliveryException {
+    	Optional<Order> op = this.getOrderById(order);
+
+		if(!op.isPresent() ){
+			throw new DBliveryException("Order does not exist");
+		}
+			
+		if (!this.canDeliver(order)) {
+			throw new DBliveryException("The order can't be delivered");
+		} 
+
+		Order o = op.get();
+
+		o.setDeliveryUser(deliveryUser);
+		
+		o.addOrderStatus("Sent", date);
+		
+		repository.updateOrder("_id", order, o);
+		
+		return o;
+    }
+
+	public List<Order> getAllOrdersMadeByUser(String username) throws DBliveryException {
+		Optional<User> op = this.getUserByUsername(username);
+		
+		if(!op.isPresent() ){
+			throw new DBliveryException("User does not exist");
+		}
+		
+		List<Order> list = new ArrayList();
+		User u1 = op.get();
+		
+		repository.getOrderByAtribute("client.username", username).into(list);
+		
+		
+		
+		return list;
+	}
+
+	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public List<Order> getPendingOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public List<Order> getSentOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public List<Order> getDeliveredOrdersForUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Product getBestSellingProduct() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public List<Product> getProductsOnePrice() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public List<Product> getSoldProductsOn(Date day) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Product getMaxWeigth() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public List<Order> getOrderNearPlazaMoreno() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 
 }
