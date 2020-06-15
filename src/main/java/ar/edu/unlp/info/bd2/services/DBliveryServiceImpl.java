@@ -403,8 +403,8 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 
 	public Product getMaxWeigth() {
 
-		Optional<Product> op = repository.getMaxWeigth();
-		return op.get();
+		return repository.getMaxWeigth();
+	
 	}
 
 
