@@ -115,4 +115,17 @@ public class DBliveryMongoRepository {
     	return collection.find(eq(field, parameter));
     }
 
+    public <T extends PersistentObject> List<T> getSoldProductsOn(Date day) {
+        AggregateIterable<T> collecAggregate = (AggregateIterable<T>) this.getDb().getCollection("order", Order.class).aggregate(
+                Arrays.asList(
+                        match(eq("dateOfOrder", day) ),
+                        unwind("$productOrders"),
+                        replaceRoot("$productOrders.product")
+                ));
+
+        Stream<T> stream =
+                StreamSupport.stream(Spliterators.spliteratorUnknownSize(collecAggregate.iterator(), 0), false);
+        return stream.collect(Collectors.toList());
+    }
+
 }

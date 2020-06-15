@@ -344,8 +344,11 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 
 
 	public List<Order> getPendingOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Order> list = new ArrayList();
+
+		repository.getOrderByAtribute("actualState.status", "Pending").into(list);
+
+		return list;
 	}
 
 
@@ -380,8 +383,9 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 
 
 	public List<Product> getSoldProductsOn(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Product> list = new ArrayList();
+		list = repository.getSoldProductsOn(day);
+		return list;
 	}
 
 
