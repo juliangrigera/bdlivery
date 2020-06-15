@@ -11,6 +11,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import com.mongodb.client.model.Sorts;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -126,6 +129,29 @@ public class DBliveryMongoRepository {
         Stream<T> stream =
                 StreamSupport.stream(Spliterators.spliteratorUnknownSize(collecAggregate.iterator(), 0), false);
         return stream.collect(Collectors.toList());
+    }
+
+    public <T extends PersistentObject> List<T> getBestSellingProduct() {
+
+        AggregateIterable<T> collecAggregate = (AggregateIterable<T>) this.getDb().getCollection("order", Order.class).aggregate(
+                Arrays.asList(
+                        unwind("$productOrders"),
+                        new Document("$group", new Document("_id", "$productOrders.product").append("total", new Document("$sum", "$productOrders.quantity"))),
+                        sort(Sorts.descending("total")),
+                        replaceRoot("$_id"),
+                        limit(1)
+                ));
+
+        Stream<T> stream =
+                StreamSupport.stream(Spliterators.spliteratorUnknownSize(collecAggregate.iterator(), 0), false);
+        return stream.collect(Collectors.toList());
+    	/*
+        group(
+                new Document().append("product_id", "$products.product._id"), Accumulators.sum("count", 1)
+        ),
+        sort(Sorts.descending("count"))
+		)).first().get("_id").toString().substring(21,45)));
+    	 */
     }
 
 }

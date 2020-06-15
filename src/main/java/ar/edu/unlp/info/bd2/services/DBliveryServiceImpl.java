@@ -371,8 +371,9 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 
 
 	public Product getBestSellingProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Product> list = new ArrayList();
+		list = repository.getBestSellingProduct();
+		return list.get(0);
 	}
 
 
