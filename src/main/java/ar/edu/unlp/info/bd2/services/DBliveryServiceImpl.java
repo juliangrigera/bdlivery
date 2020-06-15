@@ -384,10 +384,11 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 
 
 	public List<Product> getProductsOnePrice() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		List<Product> list = new ArrayList();
+		repository.getProductsOnePrice().into(list);
+		return list;
 
+	}
 
 	public List<Product> getSoldProductsOn(Date day) {
 		List<Product> list = new ArrayList();
