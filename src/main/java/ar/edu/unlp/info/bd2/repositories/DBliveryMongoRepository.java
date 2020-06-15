@@ -187,4 +187,9 @@ public class DBliveryMongoRepository {
         MongoCollection<Product> collec = this.getDb().getCollection("product", Product.class);
         return collec.find(size("historyPrice", 1) );
     }
+
+    public FindIterable<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
+        MongoCollection<Order> collec = this.getDb().getCollection("order", Order.class);
+        return collec.find(and(eq("actualState.status", "Delivered"), gte("dateOfOrder", startDate), lte("dateOfOrder", endDate) ) );
+    }
 }

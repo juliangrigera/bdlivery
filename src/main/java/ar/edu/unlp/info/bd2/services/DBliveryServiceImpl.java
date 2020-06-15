@@ -362,8 +362,11 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 
 
 	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Order> list = new ArrayList();
+
+		repository.getDeliveredOrdersInPeriod(startDate, endDate).into(list);
+
+		return list;
 	}
 
 
