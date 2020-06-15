@@ -353,8 +353,11 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 
 
 	public List<Order> getSentOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Order> list = new ArrayList();
+
+		repository.getOrderByAtribute("actualState.status", "Sent").into(list);
+
+		return list;
 	}
 
 

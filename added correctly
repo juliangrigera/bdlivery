@@ -1,0 +1,279 @@
+[33mcommit 87cb0a48a997508e604ad64f03d8a58c54b4198e[m[33m ([m[1;36mHEAD -> [m[1;32mpractica3[m[33m, [m[1;31morigin/practica3[m[33m)[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Mon Jun 15 03:08:43 2020 -0300
+
+    getBestSellingProducts added correctly
+
+[33mcommit 8e17b698a54870225cdc8b3f3cacb6806ce6956f[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Mon Jun 15 03:07:08 2020 -0300
+
+    getPendingOrders and productsSoldOn funcionando
+
+[33mcommit cf04a4f78d1c52ed5f0b6c1d163181aa4ba780d0[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Tue Jun 9 09:43:30 2020 -0300
+
+    cambios
+
+[33mcommit 8889bb8711915685e031247034684b5832fffa8c[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Fri May 29 12:17:32 2020 -0300
+
+    build success ATR
+
+[33mcommit 5c92372aee4b6e5d69ed5142e933d5081421c469[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Fri May 29 11:56:24 2020 -0300
+
+    listo el cancel
+
+[33mcommit 3edc0fdca29dbbd5fda824c546c445e6532b6c3f[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Fri May 29 11:32:18 2020 -0300
+
+    listo el createOrder y todos los get/set erroneos de la clase Order
+
+[33mcommit 9b57d753ef4ea4c9a2d17760167e4ee99efed0b4[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Fri May 29 10:41:03 2020 -0300
+
+    listo testUpdatePriceProduct
+
+[33mcommit ddf78030ee6bb2d60e65970c9d30a6f695f22db8[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Fri May 29 10:19:24 2020 -0300
+
+    listo getProdcutByName
+
+[33mcommit a978bea9c38ab661ccba9e12e7f90f2a1c51df89[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Fri May 29 09:54:26 2020 -0300
+
+    solucionado setHistoryPrice
+
+[33mcommit 2381f71417d93d2a90b84cfe3350a706833d4056[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Fri May 29 08:11:14 2020 -0300
+
+    tratando de arreglar el historyPrice pero todavia sin solucion
+
+[33mcommit d82c8d0865b72086f7d3187a4dd0e08575f6d8fe[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Wed May 27 11:42:46 2020 -0300
+
+    g
+
+[33mcommit f76859433574da088cdb303a37ba0b874c308d23[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Tue May 26 11:03:33 2020 -0300
+
+    Added method create supplier
+
+[33mcommit 84f7759560da9315b9fe2241b72a7ede8f9afdd6[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Mon May 25 13:55:18 2020 -0300
+
+    added this to every single method
+
+[33mcommit d7d913f4888c987a7774f0aa7ff891a9bc59ce5b[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Mon May 25 13:52:02 2020 -0300
+
+    persistence deleted
+
+[33mcommit 0b58227874bead6743a2ab01a3a32141709a8172[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Mon May 25 13:48:15 2020 -0300
+
+    createuser
+
+[33mcommit c75df18e24ecb48331d71f1d3c7f81825652730e[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Mon May 25 12:48:16 2020 -0300
+
+    getId()
+
+[33mcommit 0a40409332bd6239eb5797b01d4619ff3ef781cf[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Mon May 25 12:18:29 2020 -0300
+
+    modelos creados
+
+[33mcommit 1c375f79446df1f62e8b067545324914bf45dd54[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Mon May 25 11:10:53 2020 -0300
+
+    DBliveryServiceImpl
+
+[33mcommit 423accbf6fc9ccd5c9e5826489dd2d70aaf4324a[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Mon May 25 10:44:47 2020 -0300
+
+    ff
+
+[33mcommit 5bbbde00192be4d0474f9d890dca74b86636b61e[m
+Author: Lucas <lucasgustavo8830@gmail.com>
+Date:   Mon May 25 10:40:30 2020 -0300
+
+    aa
+
+[33mcommit 80d2cc1ab110b918045614fdd9e67bf823a657d2[m
+Author: Lucas Ungaro <lucasgustavo8830@gmail.com>
+Date:   Mon May 18 15:01:21 2020 -0300
+
+    correcciones
+
+[33mcommit acc7768ba4c8caf876c6f196d73eae0dc69e9a24[m
+Author: Lucas Ungaro <lucasgustavo8830@gmail.com>
+Date:   Mon May 11 12:27:52 2020 -0300
+
+    gg
+
+[33mcommit dda366d9cec343691eda5b41207a699757a3bba3[m
+Author: Lucas Ungaro <lucasgustavo8830@gmail.com>
+Date:   Mon May 11 04:38:57 2020 -0300
+
+    tp mongo resuelto
+
+[33mcommit 2cde7f7e272df72d6cdb5d3922daf00f9eaf2e24[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Fri May 8 00:36:36 2020 -0300
+
+    repo con la consulta para la profe
+
+[33mcommit d25abf671282dc7a3468d256ed70ff959c9ab245[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Thu May 7 22:30:42 2020 -0300
+
+    getProductWithPriceAt
+
+[33mcommit 622b44e0a05798e5e7bccf6da229cafefb980844[m
+Author: elgrecoLucas <lucasgustavo8830@gmail.com>
+Date:   Thu May 7 15:35:43 2020 -0300
+
+    nuevo
+
+[33mcommit 71a6d2ae91c9c0849be3f58dcf13cfced1c5a193[m
+Author: elgrecoLucas <lucasgustavo8830@gmail.com>
+Date:   Thu May 7 15:34:56 2020 -0300
+
+    repo
+
+[33mcommit 802b7069b66a5998b0906f5cdbfd204976b21fd9[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Fri May 1 14:55:31 2020 -0300
+
+    added getUsersSpendingMoreThan()
+
+[33mcommit 55fd366c08178df502cc63ad6a8b4327dc03929b[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Sun Apr 26 20:00:05 2020 -0300
+
+    2failures 3 errors
+
+[33mcommit 90fcc383c41623bf4e26c14eacf4a1c58fb09e5b[m
+Author: elgrecoLucas <lucasgustavo8830@gmail.com>
+Date:   Sun Apr 26 16:29:55 2020 -0300
+
+    mas metodos
+
+[33mcommit ca8fa9874dc9a7ae2c7c7a0bb9b68e74ae62f0d9[m
+Author: elgrecoLucas <lucasgustavo8830@gmail.com>
+Date:   Sat Apr 25 20:38:03 2020 -0300
+
+    mas metodos
+
+[33mcommit fb92e90cdf9698d74964b0b9a175883443b287ca[m
+Author: elgrecoLucas <lucasgustavo8830@gmail.com>
+Date:   Fri Apr 24 01:17:26 2020 -0300
+
+    otros test completos
+
+[33mcommit 8f67ff3feaf3ba35cfdff95426425dabe6042cd7[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Wed Apr 22 13:30:35 2020 -0300
+
+    testGetDeliveredOrdersForUser done
+
+[33mcommit 8893240576a6b7bbf021d3a69150ea53dd66c4f0[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Wed Apr 22 12:30:07 2020 -0300
+
+    testGetBestSellingProduct
+
+[33mcommit 452b6796b7fc4374851b3c7da7de26c04ca8bff1[m
+Merge: d359eb4 f4b00bf
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Wed Apr 22 11:39:48 2020 -0300
+
+    Merge branch 'master' of github.com:francotagliero/bdlivery
+
+[33mcommit d359eb42dd8cd3225e0b5265b5516add01bb9993[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Wed Apr 22 11:39:44 2020 -0300
+
+    getPendingOrders and getSentOrders
+
+[33mcommit f4b00bf8dd51520f61108726e56fe8068230811d[m
+Author: elgrecoLucas <lucasgustavo8830@gmail.com>
+Date:   Wed Apr 22 11:06:43 2020 -0300
+
+    algunos test del tp2 listos
+
+[33mcommit 64655fa5e1c0cb4166c4b383a34db7383fe45320[m
+Author: elgrecoLucas <lucasgustavo8830@gmail.com>
+Date:   Tue Apr 21 09:16:57 2020 -0300
+
+    se puede correr el DBinitializer
+
+[33mcommit c73a9234d6e8e96f14f5f8c9cc764eeec25331c2[m
+Author: elgrecoLucas <lucasgustavo8830@gmail.com>
+Date:   Sat Apr 18 18:08:26 2020 -0300
+
+    correcion al getActualStatus()
+
+[33mcommit 28572f893b55a0c791673ec29d06f4ccaf68ff35[m
+Author: elgrecoLucas <lucasgustavo8830@gmail.com>
+Date:   Tue Apr 14 16:49:57 2020 -0300
+
+    correciones
+
+[33mcommit 41dae24c0de1ea58c3b168687293a464758d6f22[m
+Author: elgrecoLucas <lucasgustavo8830@gmail.com>
+Date:   Sat Apr 4 23:48:06 2020 -0300
+
+    .sh para creación de la BD
+
+[33mcommit c09e3439b7483e08be3868ef27f44316b6fa9687[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Sat Apr 4 19:05:28 2020 -0300
+
+    refactoring in Service layer
+
+[33mcommit 7804d667f95888363c6754cdd98d73893a954ace[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Sat Apr 4 13:36:29 2020 -0300
+
+    testFinishOrder implemented and passed successfully
+
+[33mcommit c1c99b335a42b93dd12fc8282eb2b3d01ea14b07[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Sat Apr 4 12:43:19 2020 -0300
+
+    testCancelOrder() implemented and passed successfully
+
+[33mcommit dffa5755553ad2a9ccaf2488808f06c71979ecce[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Sat Apr 4 02:34:05 2020 -0300
+
+    Added getActualStatus method in DBliveryService class
+
+[33mcommit a6387268cc7c420c52dde39fff6ef24d534c915e[m
+Author: Franco Tagliero <ftagliero@gmail.com>
+Date:   Sat Apr 4 02:26:58 2020 -0300
+
+    testDeliverOrder() implemented and passed correctly
+
+[33mcommit cf03e0141e3c3f174619b4d34ddd9f81d4b8afa8[m
+Author: Franco Tagliero <ftagliero@gma
