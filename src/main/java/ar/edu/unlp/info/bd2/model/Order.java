@@ -6,6 +6,9 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
+import com.mongodb.client.model.geojson.Point;
+import com.mongodb.client.model.geojson.Position;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,9 +23,13 @@ public class Order implements PersistentObject{
 
     private String address;
 
-    private Float coordX;
+    @BsonIgnore
+    private Float coordX; //Si no ponemos El ignore no funca!
 
-    private Float coordY;
+    private Point position;
+
+    @BsonIgnore
+    private Float coordY; //Si no ponemos El ignore no funca!
 
     private Float amount;
 
@@ -31,8 +38,8 @@ public class Order implements PersistentObject{
     private User deliveryUser;
 
     private OrderStatus actualState;
-    
-    private List<ProductOrder> productOrders = new ArrayList<ProductOrder>(); 
+
+    private List<ProductOrder> productOrders = new ArrayList<ProductOrder>();
 
     private List<OrderStatus> collectionOrderStatus = new ArrayList<OrderStatus>();
 
@@ -53,6 +60,10 @@ public class Order implements PersistentObject{
         this.productOrders = new ArrayList<>();
         this.collectionOrderStatus = new ArrayList<>();
         this.addOrderStatus(this.actualState); // q te parece??
+
+        Position position1 = new Position(coordX, coordY);
+
+        this.position = new Point(position1);
 
     }
 
@@ -123,9 +134,9 @@ public class Order implements PersistentObject{
         }
 
     }
-    
+
     public List<ProductOrder> getProductOrders() {
-    	return this.productOrders;
+        return this.productOrders;
     }
 
     public void addProductOrder(ProductOrder po) {
@@ -148,9 +159,9 @@ public class Order implements PersistentObject{
     public void setCollectionOrderStatus(List<OrderStatus> collectionOrderStatus) {
         this.collectionOrderStatus = collectionOrderStatus;
     }
-    
+
     public List<OrderStatus> getCollectionOrderStatus(){
-    	return this.collectionOrderStatus;
+        return this.collectionOrderStatus;
     }
 
     public void addOrderStatus(OrderStatus orderStatus) {
@@ -187,9 +198,9 @@ public class Order implements PersistentObject{
     public Float getAmount() {
         return this.amount;
     }
-    
+
     public void setAmount(Float amount) {
-    	this.amount = amount;
+        this.amount = amount;
     }
 
     public Float calcularPrecioTotal() {
@@ -210,6 +221,14 @@ public class Order implements PersistentObject{
     public void setObjectId(ObjectId objectId) {
         this.objectId = objectId;
 
+    }
+
+    public Point getPosition() {
+        return this.position;
+    }
+
+    public void setPosition(Point position) {
+        this.position = position;
     }
 
 
