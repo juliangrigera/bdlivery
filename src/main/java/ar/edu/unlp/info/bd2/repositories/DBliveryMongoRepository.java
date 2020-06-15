@@ -1,20 +1,33 @@
 package ar.edu.unlp.info.bd2.repositories;
 
 import static com.mongodb.client.model.Aggregates.*;
-import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.gte;
+import static com.mongodb.client.model.Filters.lte;
+import static com.mongodb.client.model.Filters.regex;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.size;
+import static com.mongodb.client.model.Filters.near;
+import com.mongodb.client.model.Sorts.*;
+import com.mongodb.client.model.geojson.Point;
+import com.mongodb.client.model.geojson.Position;
 
 import ar.edu.unlp.info.bd2.model.*;
 import ar.edu.unlp.info.bd2.mongo.*;
 import com.mongodb.client.*;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import com.mongodb.client.model.Sorts;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+
 
 public class DBliveryMongoRepository {
 
@@ -156,5 +169,17 @@ public class DBliveryMongoRepository {
     public FindIterable<Order> getDeliveredOrdersForUser(String username) {
         MongoCollection<Order> collec = this.getDb().getCollection("order", Order.class);
         return collec.find(and(eq("actualState.status", "Delivered"), eq("client.username", username) ) );
+    }
+
+    public List<Order> getOrdenNearPlazaMoreno() {
+        ArrayList<Order> list = new ArrayList<>();
+        MongoCollection<Order> collec = this.getDb().getCollection("order",Order.class);
+
+        Point pMoreno = new Point(new Position(-34.921236,-57.954571) );
+        for (Order o: collec.find(near("position", pMoreno, 400.0, 0.0))) {
+            list.add(o);
+        }
+
+        return list;
     }
 }

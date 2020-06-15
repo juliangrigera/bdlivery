@@ -403,8 +403,10 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 
 
 	public List<Order> getOrderNearPlazaMoreno() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Order> list = new ArrayList();
+		list = repository.getOrdenNearPlazaMoreno();
+		return list;
+
 	}
     
 
