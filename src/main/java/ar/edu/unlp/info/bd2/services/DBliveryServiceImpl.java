@@ -338,8 +338,9 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 	}
 
 	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Supplier> list = new ArrayList();
+		list = repository.getTopNSuppliersInSentOrders(n);
+		return list;
 	}
 
 

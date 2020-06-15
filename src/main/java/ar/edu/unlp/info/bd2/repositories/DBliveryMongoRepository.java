@@ -198,4 +198,20 @@ public class DBliveryMongoRepository {
         return Optional.ofNullable(collec.find().sort(Sorts.descending("weight")).first()); //Se puede sacar el ofNullable
 
     }
+    
+    public <T extends PersistentObject> List<T> getTopNSuppliersInSentOrders(int n) {
+    	AggregateIterable<T> collecAggregate = (AggregateIterable<T>) this.getDb().getCollection("order", Order.class).aggregate(
+                Arrays.asList(
+                		match(eq("actualState.status", "Sent") ),
+                        unwind("$productOrders"),
+                        new Document("$group", new Document("_id", "$productOrders.product.supplier").append("total", new Document("$sum", "$productOrders.quantity"))),
+                        sort(Sorts.descending("total")),
+                        replaceRoot("$_id"),
+                        limit(n)
+                ));
+    	
+    	Stream<T> stream =
+                StreamSupport.stream(Spliterators.spliteratorUnknownSize(collecAggregate.iterator(), 0), false);
+        return stream.collect(Collectors.toList());
+    }
 }
