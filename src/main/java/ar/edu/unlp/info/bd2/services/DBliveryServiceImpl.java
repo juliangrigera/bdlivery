@@ -368,8 +368,11 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 
 
 	public List<Order> getDeliveredOrdersForUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Order> list = new ArrayList();
+
+		repository.getDeliveredOrdersForUser(username).into(list);
+
+		return list;
 	}
 
 

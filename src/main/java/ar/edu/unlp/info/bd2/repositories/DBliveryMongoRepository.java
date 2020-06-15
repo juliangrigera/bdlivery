@@ -1,8 +1,7 @@
 package ar.edu.unlp.info.bd2.repositories;
 
 import static com.mongodb.client.model.Aggregates.*;
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.regex;
+import static com.mongodb.client.model.Filters.*;
 
 import ar.edu.unlp.info.bd2.model.*;
 import ar.edu.unlp.info.bd2.mongo.*;
@@ -154,4 +153,8 @@ public class DBliveryMongoRepository {
     	 */
     }
 
+    public FindIterable<Order> getDeliveredOrdersForUser(String username) {
+        MongoCollection<Order> collec = this.getDb().getCollection("order", Order.class);
+        return collec.find(and(eq("actualState.status", "Delivered"), eq("client.username", username) ) );
+    }
 }
