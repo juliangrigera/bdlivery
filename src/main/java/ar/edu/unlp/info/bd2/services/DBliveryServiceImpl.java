@@ -401,8 +401,9 @@ public class DBliveryServiceImpl implements  DBliveryService, DBliveryStatistics
 
 
 	public Product getMaxWeigth() {
-		// TODO Auto-generated method stub
-		return null;
+
+		Optional<Product> op = repository.getMaxWeigth();
+		return op.get();
 	}
 
 

@@ -192,4 +192,10 @@ public class DBliveryMongoRepository {
         MongoCollection<Order> collec = this.getDb().getCollection("order", Order.class);
         return collec.find(and(eq("actualState.status", "Delivered"), gte("dateOfOrder", startDate), lte("dateOfOrder", endDate) ) );
     }
+
+    public Optional getMaxWeigth() {
+        MongoCollection<Product> collec = this.getDb().getCollection("product", Product.class);
+        return Optional.ofNullable(collec.find().sort(Sorts.descending("weight")).first()); //Se puede sacar el ofNullable
+
+    }
 }
